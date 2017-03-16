@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GithubMaster.iml" filepath="$PROJECT_DIR$/GithubMaster.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvparm/mvparm.iml" filepath="$PROJECT_DIR$/mvparm/mvparm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rxerrorhandler/rxerrorhandler.iml" filepath="$PROJECT_DIR$/rxerrorhandler/rxerrorhandler.iml" />
+    </modules>
+  </component>
+</project>
