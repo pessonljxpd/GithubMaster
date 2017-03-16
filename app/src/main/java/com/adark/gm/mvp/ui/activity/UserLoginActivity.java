@@ -1,13 +1,14 @@
 package com.adark.gm.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.ViewTreeObserver;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import butterknife.BindView;
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
@@ -17,9 +18,10 @@ import com.adark.gm.di.module.UserLoginModule;
 import com.adark.gm.mvp.contract.UserLoginContract;
 import com.adark.gm.mvp.presenter.UserLoginPresenter;
 import com.jess.arms.utils.UiUtils;
+import com.jess.arms.widget.customfonts.MyEditText;
+import com.jess.arms.widget.customfonts.MyTextView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import okhttp3.Credentials;
-import okhttp3.Request;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -38,16 +40,40 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 
 public class UserLoginActivity extends WEActivity<UserLoginPresenter>
     implements UserLoginContract.View, View.OnClickListener {
+    //implements UserLoginContract.View, View.OnClickListener, ResizeRelativeLayout.KeybordStateListener {
     // UI references.
-    @Nullable @BindView(R.id.login_tv_username) EditText mUsernameView;
-    @Nullable @BindView(R.id.login_tv_password) EditText mPasswordView;
-    @Nullable @BindView(R.id.login_btn_sign_in) Button mSignInView;
+    @Nullable @BindView(R.id.login_rrl) RelativeLayout mRelativeLayout;
+    @Nullable @BindView(R.id.login_iv_avatar_big) ImageView mAvatarBigView;
+    @Nullable @BindView(R.id.login_iv_avatar_small) ImageView mAvatarSmallView;
+
+    @Nullable @BindView(R.id.login_tv_username) MyEditText mUsernameView;
+    @Nullable @BindView(R.id.login_tv_password) MyEditText mPasswordView;
+    @Nullable @BindView(R.id.login_btn_sign_in) MyTextView mSignInView;
     @Nullable @BindView(R.id.login_pb) View mProgressView;
     @Nullable @BindView(R.id.login_form) View mLoginFormView;
 
     private static final String TAG = UserLoginActivity.class.getSimpleName();
     private RxPermissions mRxPermissions;
     private AppComponent mAppComponent;
+    private int mRootBottom = Integer.MIN_VALUE;
+    private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener =
+        new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override public void onGlobalLayout() {
+                Rect rect = new Rect();
+                mRelativeLayout.getGlobalVisibleRect(rect);
+                // 进入Activity时会布局，第一次调用onGlobalLayout，先记录开始软键盘没有弹出时底部的位置
+                if (mRootBottom == Integer.MIN_VALUE) {
+                    mRootBottom = rect.bottom;
+                    return;
+                }
+                // adjustResize，软键盘弹出后高度会变小
+                if (rect.bottom < mRootBottom) {
+                    setAvatarBigViewVisibility(false);
+                } else {
+                    setAvatarBigViewVisibility(true);
+                }
+            }
+        };
 
     @Override protected void setupActivityComponent(AppComponent pAppComponent) {
         mAppComponent = pAppComponent;
@@ -64,8 +90,7 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
     }
 
     @Override protected void initData() {
-        mUsernameView.setText("pessonljxpd");
-        mPasswordView.setText("xing19910716");
+        mRelativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
         mSignInView.setOnClickListener(this);
     }
 
@@ -118,27 +143,27 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
         final String password = mPasswordView.getText().toString().trim();
 
         return Credentials.basic(username, password);
+    }
 
-        //mWeApplication.getAppComponent().okHttpClient().newBuilder().addNetworkInterceptor(new Interceptor() {
-        //    @Override public Response intercept(Chain chain) throws IOException {
-        //        String credentials = Credentials.basic(username, password);
-        //
-        //        return chain.proceed(chain.request().newBuilder().addHeader("Authorization", credentials).build());
-        //    }
-        //}).build();
+    @Override public void setAvatarBigViewVisibility(boolean pVisible) {
+        if (pVisible) {
+            showAvatarBigView();
+        } else {
+            hideAvatarBigView();
+        }
+    }
 
-        //mWeApplication.getAppComponent().okHttpClient().newBuilder().authenticator(new Authenticator() {
-        //    @Override public Request authenticate(Route route, Response response) throws IOException {
-        //        String credentials = Credentials.basic(username, password);
-        //        return response.request().newBuilder().addHeader("Authorization", credentials).build();
-        //    }
-        //}).build();
+    private void showAvatarBigView() {
+        mAvatarBigView.postDelayed(new Runnable() {
+            @Override public void run() {
+                mAvatarBigView.setVisibility(View.VISIBLE);
+            }
+        }, 100);
+        mAvatarSmallView.setVisibility(View.INVISIBLE);
+    }
 
-        //mAppComponent.okHttpClient().newBuilder().addInterceptor(new Interceptor() {
-        //    @Override public Response intercept(Chain chain) throws IOException {
-        //        String credentials = Credentials.basic(username, password);
-        //        return chain.proceed(chain.request().newBuilder().addHeader("Authorization", credentials).build());
-        //    }
-        //});
+    private void hideAvatarBigView() {
+        mAvatarBigView.setVisibility(View.GONE);
+        mAvatarSmallView.setVisibility(View.VISIBLE);
     }
 }
