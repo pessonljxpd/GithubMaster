@@ -1,5 +1,6 @@
 package com.jess.arms.base;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.jess.arms.mvp.BasePresenter;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
@@ -25,7 +27,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     protected final String TAG = this.getClass().getSimpleName();
     protected BaseApplication mApplication;
     protected Context mContext;
-    @Inject protected P mPresenter;
+    @Inject
+    protected P mPresenter;
     private Unbinder mUnbinder;
 
     private static final String LAYOUT_LINEARLAYOUT = "LinearLayout";
@@ -33,7 +36,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
 
-    @Override public View onCreateView(String name, Context context, AttributeSet attrs) {
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
         View view = null;
         if (name.equals(LAYOUT_FRAMELAYOUT)) {
             view = new AutoFrameLayout(context, attrs);
@@ -52,19 +56,26 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         return super.onCreateView(name, context, attrs);
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         mApplication.getAppManager().setCurrentActivity(this);
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
         if (mApplication.getAppManager().getCurrentActivity() == this) {
             mApplication.getAppManager().setCurrentActivity(null);
         }
     }
 
-    @Nullable @Override protected void onCreate(Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        if (isAllowFullScreen()) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         super.onCreate(savedInstanceState);
         mApplication = (BaseApplication) getApplication();
         mContext = this;
@@ -79,6 +90,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         {
             EventBus.getDefault().register(this);//注册到事件主线
         }
+        if (isSteepStatusBar()) {
+            steepStatusBar();
+        }
         setContentView(initView());
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
@@ -87,11 +101,25 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     }
 
     /**
+     * 设置状态栏沉浸
+     */
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void steepStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
+    /**
      * 依赖注入的入口
      */
     protected abstract void ComponentInject();
 
-    public void FullScreencall() {
+    /**
+     * 隐藏虚拟菜单
+     */
+    public void hideBottomUIMenu() {
         if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
             View v = this.getWindow().getDecorView();
             v.setSystemUiVisibility(View.GONE);
@@ -103,7 +131,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         }
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         mApplication.getAppManager().removeActivity(this);
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
@@ -118,17 +147,46 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     }
 
     /**
+     * 是否允许全品
+     *
+     * @return 默认值为false，不允许全屏
+     */
+    public boolean isAllowFullScreen() {
+        return false;
+    }
+
+    /**
+     * 是否设置状态栏沉浸
+     *
+     * @return 默认值为true，设置状态栏沉浸
+     */
+    public boolean isSteepStatusBar() {
+        return true;
+    }
+
+    /**
+     * 是否允许屏幕旋转
+     *
+     * @return 默认值为false，屏幕不旋转
+     */
+    public boolean isScreenRote() {
+        return false;
+    }
+
+    /**
      * 是否使用eventBus,默认为使用(true)，
      */
     protected boolean useEventBus() {
         return true;
     }
 
-    @Override public void onBackPressed() {
+    @Override
+    public void onBackPressed() {
         super.onBackPressed();
     }
 
     protected abstract View initView();
 
     protected abstract void initData();
+
 }

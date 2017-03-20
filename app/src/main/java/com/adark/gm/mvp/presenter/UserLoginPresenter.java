@@ -17,6 +17,7 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
 import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import okhttp3.Credentials;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.functions.Action1;
@@ -38,9 +39,9 @@ import timber.log.Timber;
 
 @ActivityScope public class UserLoginPresenter extends BasePresenter<UserLoginContract.Model, UserLoginContract.View> {
     private RxErrorHandler mErrorHandler;
-    private Application mApplication;
-    private ImageLoader mImageLoader;
-    private AppManager mAppManager;
+    private Application    mApplication;
+    private ImageLoader    mImageLoader;
+    private AppManager     mAppManager;
 
     @Inject
     public UserLoginPresenter(UserLoginContract.Model pModel, UserLoginContract.View pRootView, RxErrorHandler pHandler,
@@ -52,33 +53,43 @@ import timber.log.Timber;
         this.mAppManager = pAppManager;
     }
 
-    public void signIn(String pCredentials) {
-        mModel.getLoginUser(pCredentials)
-            .subscribeOn(Schedulers.io())
-            .retryWhen(new RetryWithDelay(3, 2))
-            .doOnSubscribe(new Action0() {
-                @Override public void call() {
-                    mRootView.showLoading();
-                }
-            })
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doAfterTerminate(new Action0() {
-                @Override public void call() {
-                    mRootView.hideLoading();
-                }
-            })
-            .compose(RxUtils.<User>bindToLifecycle(mRootView))
-            .delaySubscription(2, TimeUnit.MILLISECONDS )
-            .subscribe(new ErrorHandleSubscriber<User>(mErrorHandler) {
-                private String mUserInfo;
+    public void signIn(String pUsername, String pPassword) {
+        String credentials = createCredentials(pUsername, pPassword);
+        mModel.getLoginUser(credentials)
+              .subscribeOn(Schedulers.io())
+              .retryWhen(new RetryWithDelay(3, 2))
+              .subscribeOn(AndroidSchedulers.mainThread())
+              .observeOn(AndroidSchedulers.mainThread())
+              .compose(RxUtils.<User>bindToLifecycle(mRootView))
+              .subscribe(new ErrorHandleSubscriber<User>(mErrorHandler) {
+                  private String mUserInfo;
 
-                @Override public void onNext(User pUser) {
-                    Gson gson = new Gson();
-                    mUserInfo = gson.toJson(pUser, User.class);
-                    mRootView.showMessage(mUserInfo);
-                }
-            });
+                  @Override public void onNext(User pUser) {
+                      Gson gson = new Gson();
+                      mUserInfo = gson.toJson(pUser, User.class);
+                      mRootView.showMessage(mUserInfo);
+                  }
+
+                  @Override public void onStart() {
+                      super.onStart();
+                      mRootView.setCPBProgress(50);
+                  }
+
+                  @Override public void onCompleted() {
+                      super.onCompleted();
+                      mRootView.setCPBProgress(100);
+                  }
+
+                  @Override public void onError(Throwable e) {
+                      super.onError(e);
+                      mRootView.setCPBProgress(-1);
+                      mRootView.showMessage(e.getMessage());
+                  }
+              });
+    }
+
+    private String createCredentials(String pUsername, String pPassword) {
+        return Credentials.basic(pUsername, pPassword);
     }
 
     @Override public void onDestroy() {

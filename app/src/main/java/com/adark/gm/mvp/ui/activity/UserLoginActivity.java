@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import butterknife.BindView;
@@ -17,11 +19,15 @@ import com.adark.gm.di.component.DaggerUserLoginComponent;
 import com.adark.gm.di.module.UserLoginModule;
 import com.adark.gm.mvp.contract.UserLoginContract;
 import com.adark.gm.mvp.presenter.UserLoginPresenter;
+import com.dd.CircularProgressButton;
+import com.jess.arms.utils.DeviceUtils;
 import com.jess.arms.utils.UiUtils;
+import com.jess.arms.widget.customfonts.MyCheckBox;
 import com.jess.arms.widget.customfonts.MyEditText;
 import com.jess.arms.widget.customfonts.MyTextView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import okhttp3.Credentials;
+import org.w3c.dom.Text;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -39,23 +45,21 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 
 public class UserLoginActivity extends WEActivity<UserLoginPresenter>
-    implements UserLoginContract.View, View.OnClickListener {
-    //implements UserLoginContract.View, View.OnClickListener, ResizeRelativeLayout.KeybordStateListener {
+    implements UserLoginContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     // UI references.
-    @Nullable @BindView(R.id.login_rrl) RelativeLayout mRelativeLayout;
-    @Nullable @BindView(R.id.login_iv_avatar_big) ImageView mAvatarBigView;
-    @Nullable @BindView(R.id.login_iv_avatar_small) ImageView mAvatarSmallView;
-
-    @Nullable @BindView(R.id.login_tv_username) MyEditText mUsernameView;
-    @Nullable @BindView(R.id.login_tv_password) MyEditText mPasswordView;
-    @Nullable @BindView(R.id.login_btn_sign_in) MyTextView mSignInView;
-    @Nullable @BindView(R.id.login_pb) View mProgressView;
-    @Nullable @BindView(R.id.login_form) View mLoginFormView;
+    @Nullable @BindView(R.id.login_rrl)                RelativeLayout         mRelativeLayout;
+    @Nullable @BindView(R.id.login_iv_avatar_big)      ImageView              mAvatarBigView;
+    @Nullable @BindView(R.id.login_tv_username)        MyEditText             mUsernameView;
+    @Nullable @BindView(R.id.login_tv_password)        MyEditText             mPasswordView;
+    @Nullable @BindView(R.id.login_cb_remember)        MyCheckBox             mRememberView;
+    @Nullable @BindView(R.id.login_tv_forget_password) MyTextView             mForgetPasswordView;
+    @Nullable @BindView(R.id.login_btn_sign_in)        CircularProgressButton mSignInView;
+    @Nullable @BindView(R.id.login_form)               View                   mLoginFormView;
 
     private static final String TAG = UserLoginActivity.class.getSimpleName();
     private RxPermissions mRxPermissions;
-    private AppComponent mAppComponent;
-    private int mRootBottom = Integer.MIN_VALUE;
+    private AppComponent  mAppComponent;
+    private int                                     mRootBottom             = Integer.MIN_VALUE;
     private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener =
         new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override public void onGlobalLayout() {
@@ -79,10 +83,10 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
         mAppComponent = pAppComponent;
         mRxPermissions = new RxPermissions(this);
         DaggerUserLoginComponent.builder()
-            .appComponent(pAppComponent)
-            .userLoginModule(new UserLoginModule(this)) //请将UserLoginModule()第一个首字母改为小写
-            .build()
-            .inject(this);
+                                .appComponent(pAppComponent)
+                                .userLoginModule(new UserLoginModule(this)) //请将UserLoginModule()第一个首字母改为小写
+                                .build()
+                                .inject(this);
     }
 
     @Override protected View initView() {
@@ -92,20 +96,15 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
     @Override protected void initData() {
         mRelativeLayout.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
         mSignInView.setOnClickListener(this);
+        mForgetPasswordView.setOnClickListener(this);
+        mSignInView.setIndeterminateProgressMode(true);
+        mRememberView.setOnCheckedChangeListener(this);
     }
 
     @Override public void showLoading() {
-        if (!mProgressView.isShown()) {
-            mProgressView.setVisibility(View.VISIBLE);
-            mLoginFormView.setVisibility(View.GONE);
-        }
     }
 
     @Override public void hideLoading() {
-        if (mProgressView.isShown()) {
-            mProgressView.setVisibility(View.GONE);
-            mLoginFormView.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override public void showMessage(@NonNull String pMessage) {
@@ -122,6 +121,10 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
         finish();
     }
 
+    @Override public void setCPBProgress(int pProgress) {
+        mSignInView.setProgress(pProgress);
+    }
+
     @Override public RxPermissions getRxPermissions() {
         return null;
     }
@@ -129,23 +132,66 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
     @Override public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.login_tv_forget_password:
+                UiUtils.makeText("forget password");
+                break;
             case R.id.login_btn_sign_in:
-                String authorization = createAuthorization();
-                mPresenter.signIn(authorization);
+                if (resetCircularProgressButton()) {
+                    return;
+                }
+                DeviceUtils.hideSoftKeyboard(mContext, mSignInView);
+                attempSignIn();
                 break;
             default:
                 break;
         }
     }
 
-    private String createAuthorization() {
-        final String username = mUsernameView.getText().toString().trim();
-        final String password = mPasswordView.getText().toString().trim();
+    private void attempSignIn() {
+        //reset errors
+        mUsernameView.setError(null);
+        mPasswordView.setError(null);
 
-        return Credentials.basic(username, password);
+        String username = mUsernameView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            focusView.requestFocus();
+        } else {
+            mPresenter.signIn(username, password);
+        }
     }
 
-    @Override public void setAvatarBigViewVisibility(boolean pVisible) {
+    private boolean resetCircularProgressButton() {
+        boolean reset = false;
+        if (mSignInView.getProgress() == 100) {
+            mSignInView.setProgress(0);
+            reset = true;
+        } else if (mSignInView.getProgress() == -1) {
+            mSignInView.setProgress(0);
+            reset = true;
+        } else {
+            reset = false;
+        }
+        return reset;
+    }
+
+    public void setAvatarBigViewVisibility(boolean pVisible) {
         if (pVisible) {
             showAvatarBigView();
         } else {
@@ -154,16 +200,19 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
     }
 
     private void showAvatarBigView() {
-        mAvatarBigView.postDelayed(new Runnable() {
-            @Override public void run() {
-                mAvatarBigView.setVisibility(View.VISIBLE);
-            }
-        }, 100);
-        mAvatarSmallView.setVisibility(View.INVISIBLE);
+        mAvatarBigView.setVisibility(View.VISIBLE);
     }
 
     private void hideAvatarBigView() {
         mAvatarBigView.setVisibility(View.GONE);
-        mAvatarSmallView.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            //do something
+            UiUtils.makeText("isChecked");
+        } else {
+            UiUtils.makeText("unChecked");
+        }
     }
 }

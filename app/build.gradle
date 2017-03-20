@@ -47,5 +47,6 @@ dependencies {
   compile rootProject.ext.dependencies["design"]
   apt rootProject.ext.dependencies["dagger2-apt-compiler"]
   compile rootProject.ext.dependencies["paginate"]
+  compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
   compile project(':mvparm')
 }

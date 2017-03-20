@@ -1,32 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_rrl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".mvp.ui.activity.UserLoginActivity"
     >
-
-  <ImageView
-      android:id="@+id/login_iv_avatar_small"
-      android:layout_width="45dp"
-      android:layout_height="45dp"
-      android:layout_alignParentRight="true"
-      android:layout_alignParentTop="true"
-      android:layout_marginRight="@dimen/activity_horizontal_margin"
-      android:layout_marginTop="@dimen/activity_horizontal_margin"
-      android:elevation="3dp"
-      android:src="@drawable/github_icon"
-      android:visibility="invisible"
-      />
-  <!-- Login progress -->
-  <ProgressBar
-      android:id="@+id/login_pb"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="8dp"
-      android:visibility="gone"
-      style="?android:attr/progressBarStyleLarge"
-      />
 
   <LinearLayout
       android:id="@+id/login_form"
@@ -52,6 +31,7 @@
         android:id="@+id/head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Github Login"
@@ -71,11 +51,13 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginLeft="46dp"
+          android:layout_marginRight="46dp"
           android:background="#0000"
           android:drawableLeft="@drawable/user_icon"
           android:drawablePadding="12dp"
           android:gravity="left"
           android:hint="@string/prompt_username"
+          android:maxLength="12"
           android:maxLines="1"
           android:padding="16dp"
           android:textColor="@color/colortext"
@@ -90,12 +72,13 @@
         android:layout_height="1dp"
         android:layout_marginLeft="56dp"
         android:layout_marginRight="56dp"
-        android:background="#59d58d"
+        android:background="@color/colorPrimary"
         />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:textColor="@color/colortext"
         android:textColorHint="@color/colorhint"
         >
@@ -112,8 +95,9 @@
           android:hint="@string/prompt_password"
           android:imeActionId="@+id/login"
           android:imeActionLabel="@string/action_sign_in_short"
-          android:imeOptions="actionDone"
+          android:imeOptions="actionGo"
           android:inputType="textPassword"
+          android:maxLength="12"
           android:maxLines="1"
           android:padding="16dp"
           android:textColor="@color/colortext"
@@ -127,41 +111,41 @@
         android:layout_height="1dp"
         android:layout_marginLeft="56dp"
         android:layout_marginRight="56dp"
-        android:background="#59d58d"
+        android:background="@color/colorPrimary"
         />
 
     <LinearLayout
         android:id="@+id/liner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         >
+
       <com.jess.arms.widget.customfonts.MyCheckBox
-          android:id="@+id/login_cb_rember"
+          android:id="@+id/login_cb_remember"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginLeft="60dp"
           android:layout_weight="2"
-          android:buttonTint="@color/colorhint"
+          android:layout_marginLeft="60dp"
+          android:buttonTint="@color/colorPrimary"
           android:checked="false"
           android:text="记住密码"
           android:textColor="@color/colorhint"
           android:textSize="11dp"
           />
-
       <com.jess.arms.widget.customfonts.MyTextView
-          android:id="@+id/forgotpass"
+          android:id="@+id/login_tv_forget_password"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_gravity="center"
+          android:layout_gravity="right|center_vertical"
           android:layout_weight="2.3"
           android:text="Forgot password?"
           android:textColor="@color/colorhint"
           android:textSize="11dp"
           />
     </LinearLayout>
-
-    <com.jess.arms.widget.customfonts.MyTextView
+    <com.dd.CircularProgressButton
         android:id="@+id/login_btn_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -169,13 +153,18 @@
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/react_green"
-        android:elevation="3dp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="@string/action_sign_in"
-        android:textColor="#fff"
-        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cpb_colorIndicator="@color/colorPrimary"
+        app:cpb_colorIndicatorBackground="@color/cpb_grey"
+        app:cpb_colorProgress="@color/cpb_white"
+        app:cpb_cornerRadius="48dp"
+        app:cpb_selectorComplete="@drawable/complete_state_selector"
+        app:cpb_selectorError="@drawable/error_state_selector"
+        app:cpb_selectorIdle="@drawable/idle_state_selector"
+        app:cpb_textComplete="@string/success"
+        app:cpb_textError="@string/failed"
+        app:cpb_textIdle="@string/sign_in"
         />
   </LinearLayout>
 </RelativeLayout>
