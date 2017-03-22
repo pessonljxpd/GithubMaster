@@ -7,6 +7,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.telephony.TelephonyManager;
 
 import java.util.Locale;
@@ -20,27 +22,7 @@ import timber.log.Timber;
 public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    public enum NetType {
-        WIFI("WIFI"), CMNET("CMNET"), CMWAP("CMWAP"), NONE("NONE");
-
-        private String mNetDesc;
-
-        NetType(String pNetDesc) {
-            this.mNetDesc = pNetDesc;
-        }
-
-        @Override
-        public String toString() {
-            return mNetDesc;
-        }
-    }
-
-    public static boolean isNetworkAvailable(Context pContext) {
-        if (pContext == null) {
-            Timber.d(TAG, "Context is null");
-            return false;
-        }
-
+    public static boolean isNetworkAvailable(@NonNull Context pContext) {
         ConnectivityManager connectivityManager = (ConnectivityManager) pContext.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -52,30 +34,23 @@ public class NetworkUtils {
         }
     }
 
-    private static <T> boolean getNetworkState(ConnectivityManager pConnectivityManagers, T[] pT) {
-        if (pT == null) {
-            Timber.d(TAG, "Network array is null");
-            return false;
-        }
-        for (T t : pT) {
-            if (t instanceof NetworkInfo) {
-                NetworkInfo.State state = ((NetworkInfo) t).getState();
-                if (state == NetworkInfo.State.CONNECTED) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else if (t instanceof Network) {
-                NetworkInfo networkInfo = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    networkInfo = pConnectivityManagers.getNetworkInfo((Network) t);
-                }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private static boolean getNetworkState(ConnectivityManager pConnectivityManager, @NonNull Network[] pNetworks) {
+        for (Network network : pNetworks) {
+            NetworkInfo networkInfo = pConnectivityManager.getNetworkInfo(network);
 
-                if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-                    return true;
-                } else {
-                    return false;
-                }
+            if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean getNetworkState(ConnectivityManager pConnectivityManager, @NonNull NetworkInfo[]
+            pNetworkInfos) {
+        for (NetworkInfo networkInfo : pNetworkInfos) {
+            if (networkInfo.getState() == NetworkInfo.State.CONNECTED){
+                return true;
             }
         }
         return false;
@@ -83,7 +58,7 @@ public class NetworkUtils {
 
     public static boolean isNetworkConnected(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return false;
         }
         ConnectivityManager mConnectivityManager = (ConnectivityManager) pContext.getSystemService(
@@ -98,7 +73,7 @@ public class NetworkUtils {
 
     public static boolean isWifiConnected(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return false;
         }
         ConnectivityManager connectivityManager = (ConnectivityManager) pContext.getSystemService(
@@ -113,7 +88,7 @@ public class NetworkUtils {
 
     public static boolean isMobileConnected(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return false;
         }
 
@@ -133,7 +108,7 @@ public class NetworkUtils {
 
     public static int getNetType(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return -1;
         }
         ConnectivityManager connectivityManager = (ConnectivityManager) pContext.getSystemService(
@@ -142,45 +117,9 @@ public class NetworkUtils {
         if (networkInfo != null && networkInfo.isAvailable()) {
             return networkInfo.getType();
         } else {
-            Timber.d(TAG, "NetworkInfo is null or unavailable");
+            Timber.tag(TAG).d("NetworkInfo is null or unavailable");
             return -1;
         }
-    }
-
-    /**
-     * 获取APN类型
-     *
-     * @param pContext
-     * @return
-     */
-    public static NetType getAPNType(Context pContext) {
-        if (pContext == null) {
-            Timber.d(TAG, "Context is null");
-            return NetType.NONE;
-        }
-        NetType netType = NetType.NONE;
-        ConnectivityManager connectivityManager = (ConnectivityManager) pContext.getSystemService(
-                Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isAvailable()) {
-            switch (networkInfo.getType()) {
-                case ConnectivityManager.TYPE_MOBILE:
-                    String networkExtraInfo = networkInfo.getExtraInfo().toLowerCase(Locale.getDefault());
-                    if ("cmnet".equals(networkExtraInfo)) {
-                        netType = NetType.CMNET;
-                    } else if ("cmwap".equals(networkExtraInfo)) {
-                        netType = NetType.CMWAP;
-                    }
-                    break;
-                case ConnectivityManager.TYPE_WIFI:
-                    netType = NetType.WIFI;
-                    break;
-            }
-        } else {
-            Timber.d(TAG, "NetworkInfo is null or unavailable");
-            netType = NetType.NONE;
-        }
-        return netType;
     }
 
     /**
@@ -192,7 +131,7 @@ public class NetworkUtils {
      */
     public static String getNetworkOperatorName(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return "";
         }
         TelephonyManager telephonyManager = (TelephonyManager) pContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -211,7 +150,7 @@ public class NetworkUtils {
      */
     public static int getPhoneType(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return -1;
         }
         TelephonyManager telephonyManager = (TelephonyManager) pContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -221,19 +160,12 @@ public class NetworkUtils {
     /**
      * 在中国，联通的3G为UMTS或HSDPA，移动和联通的2G为GPRS或EGDE，电信的2G为CDMA，电信的3G为EVDO
      *
-     * @return 2G、3G、4G、未知四种状态
-     */
-
-
-    /**
-     * 在中国，联通的3G为UMTS或HSDPA，移动和联通的2G为GPRS或EGDE，电信的2G为CDMA，电信的3G为EVDO
-     *
      * @param pContext
      * @return 2G、3G、4G、未知四种状态
      */
     public static int getNetworkClass(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return -1;
         }
         TelephonyManager telephonyManager = (TelephonyManager) pContext.getSystemService(Context.TELEPHONY_SERVICE);
@@ -277,7 +209,7 @@ public class NetworkUtils {
      */
     public static int getNetworkState(Context pContext) {
         if (pContext == null) {
-            Timber.d(TAG, "Context is null");
+            Timber.tag(TAG).d("Context is null");
             return -1;
         }
         int netWorkType = NetworkConstants.NETWORK_CLASS_UNKNOWN;
@@ -298,6 +230,12 @@ public class NetworkUtils {
         return netWorkType;
     }
 
+    /**
+     * 获取设备
+     *
+     * @param pContext
+     * @return
+     */
     public static String getIp(Context pContext) {
         WifiManager wm = (WifiManager) pContext.getSystemService(Context.WIFI_SERVICE);
         //检查Wifi状态

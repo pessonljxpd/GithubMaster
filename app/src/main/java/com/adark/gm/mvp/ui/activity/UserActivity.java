@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import butterknife.BindView;
+
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
 import com.adark.gm.common.WEActivity;
@@ -22,6 +23,7 @@ import com.jess.arms.base.DefaultAdapter;
 import com.jess.arms.utils.UiUtils;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -43,66 +45,85 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
  */
 
 public class UserActivity extends WEActivity<UserPresenter>
-    implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
+        implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @Nullable @BindView(R.id.user_recycler_view) RecyclerView mUserRecyclerView;
+    @Nullable
+    @BindView(R.id.user_recycler_view)
+    RecyclerView mUserRecyclerView;
 
-    @Nullable @BindView(R.id.user_swipe_refresh) SwipeRefreshLayout mUserSwipeRefreshView;
+    @Nullable
+    @BindView(R.id.user_swipe_refresh)
+    SwipeRefreshLayout mUserSwipeRefreshView;
 
     private Paginate mPaginate;
     private RxPermissions mRxPermissions;
     private boolean mIsLoadingMore;
 
-    @Override protected void setupActivityComponent(AppComponent pAppComponent) {
+    @Override
+    protected void setupActivityComponent(AppComponent pAppComponent) {
         mRxPermissions = new RxPermissions(this);
         DaggerUserComponent.builder()
-            .appComponent(pAppComponent)
-            .userModule(new UserModule(this)) //请将UserModule()第一个首字母改为小写
-            .build()
-            .inject(this);
+                           .appComponent(pAppComponent)
+                           .userModule(new UserModule(this)) //请将UserModule()第一个首字母改为小写
+                           .build()
+                           .inject(this);
     }
 
-    @Override protected View initView() {
-        return LayoutInflater.from(this).inflate(R.layout.activity_user, null, false);
+    @Override
+    protected int bindLayout() {
+        return R.layout.activity_user;
     }
 
-    @Override protected void initData() {
+    @Override
+    protected void initView() {
+    }
+
+    @Override
+    protected void initData() {
         mPresenter.requestUsers(true);
     }
 
-    @Override public void onRefresh() {
+    @Override
+    public void onRefresh() {
         mPresenter.requestUsers(true);
     }
 
-    @Override public void showLoading() {
+    @Override
+    public void showLoading() {
         Timber.tag(TAG).d("showLoading");
         Observable.just(1).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
-            @Override public void call(Integer pInteger) {
+            @Override
+            public void call(Integer pInteger) {
                 mUserSwipeRefreshView.setRefreshing(true);
             }
         });
     }
 
-    @Override public void hideLoading() {
+    @Override
+    public void hideLoading() {
         Timber.tag(TAG).d("hideLoading");
         mUserSwipeRefreshView.setRefreshing(false);
     }
 
-    @Override public void showMessage(@NonNull String pMessage) {
+    @Override
+    public void showMessage(@NonNull String pMessage) {
         checkNotNull(pMessage);
         UiUtils.SnackbarText(pMessage);
     }
 
-    @Override public void launchActivity(@NonNull Intent pIntent) {
+    @Override
+    public void launchActivity(@NonNull Intent pIntent) {
         checkNotNull(pIntent);
         UiUtils.startActivity(pIntent);
     }
 
-    @Override public void killMyself() {
+    @Override
+    public void killMyself() {
         finish();
     }
 
-    @Override public void setAdapter(DefaultAdapter pAdapter) {
+    @Override
+    public void setAdapter(DefaultAdapter pAdapter) {
         initRecyclerView();
         mUserRecyclerView.setAdapter(pAdapter);
         initPaginate();
@@ -124,16 +145,19 @@ public class UserActivity extends WEActivity<UserPresenter>
         if (mPaginate == null) {
             Paginate.Callbacks callbacks = new Paginate.Callbacks() {
 
-                @Override public void onLoadMore() {
+                @Override
+                public void onLoadMore() {
                     Timber.tag(TAG).d(mPresenter == null ? "mPresenter==null" : mPresenter.toString());
                     mPresenter.requestUsers(true);
                 }
 
-                @Override public boolean isLoading() {
+                @Override
+                public boolean isLoading() {
                     return mIsLoadingMore;
                 }
 
-                @Override public boolean hasLoadedAllItems() {
+                @Override
+                public boolean hasLoadedAllItems() {
                     return false;
                 }
             };
@@ -143,19 +167,23 @@ public class UserActivity extends WEActivity<UserPresenter>
         }
     }
 
-    @Override public void startLoadMore() {
+    @Override
+    public void startLoadMore() {
         mIsLoadingMore = true;
     }
 
-    @Override public void endLoadMore() {
+    @Override
+    public void endLoadMore() {
         mIsLoadingMore = false;
     }
 
-    @Override public RxPermissions getRxPermissions() {
+    @Override
+    public RxPermissions getRxPermissions() {
         return mRxPermissions;
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         mRxPermissions = null;
         mPaginate = null;

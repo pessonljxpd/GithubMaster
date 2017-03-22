@@ -12,16 +12,20 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.style.AbsoluteSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adark.mvparm.R;
 import com.jess.arms.base.BaseApplication;
 
 import org.simple.eventbus.EventBus;
+import org.w3c.dom.Text;
 
 import java.security.MessageDigest;
 
@@ -119,7 +123,8 @@ public class UiUtils {
      */
 
     public static float getDimens(String dimenNmae) {
-        return getResources().getDimension(getResources().getIdentifier(dimenNmae, "dimen", getContext().getPackageName()));
+        return getResources().getDimension(
+                getResources().getIdentifier(dimenNmae, "dimen", getContext().getPackageName()));
     }
 
     /**
@@ -192,16 +197,65 @@ public class UiUtils {
     }
 
     /**
-     * 单列toast
+     * 单例子文字短时间toast
      *
-     * @param string
+     * @param pMessage
      */
-
-    public static void makeText(String string) {
+    public static void toastText(String pMessage) {
         if (mToast == null) {
-            mToast = Toast.makeText(getContext(), string, Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(getContext(), pMessage, Toast.LENGTH_SHORT);
         }
-        mToast.setText(string);
+        setToastContentView(pMessage);
+        mToast.show();
+    }
+
+    /**
+     * 单例子文字长时间toast
+     *
+     * @param pMessage
+     */
+    public static void toastTextWithLong(String pMessage) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getContext(), pMessage, Toast.LENGTH_LONG);
+        }
+        setToastContentView(pMessage);
+        mToast.show();
+    }
+
+    private static void setToastContentView(String pMessage) {
+        View view = View.inflate(getContext(), R.layout.toast_text, null);
+        TextView toastText = (TextView) view.findViewById(R.id.toast_tv_content);
+        toastText.setText(pMessage);
+
+        mToast.setView(view);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+    }
+
+    private static void setContentView(int pResId, String pDesc) {
+        View view = View.inflate(getContext(), R.layout.toast_image, null);
+        ImageView toastImage = (ImageView) view.findViewById(R.id.toast_iv_icon);
+        TextView toastText = (TextView) view.findViewById(R.id.toast_tv_content);
+        toastImage.setImageResource(pResId);
+        toastText.setText(pDesc);
+
+        mToast.setView(view);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+    }
+
+
+    public static void toastImage(int pResId, String pDesc) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getContext(), pDesc, Toast.LENGTH_SHORT);
+        }
+        setContentView(pResId, pDesc);
+        mToast.show();
+    }
+
+    public static void toastImageWithLong(int pResId, String pDesc) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getContext(), pDesc, Toast.LENGTH_LONG);
+        }
+        setContentView(pResId, pDesc);
         mToast.show();
     }
 
@@ -400,13 +454,13 @@ public class UiUtils {
     }
 
 
-    public static void killAll(){
+    public static void killAll() {
         Message message = new Message();
         message.what = KILL_ALL;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
 
-    public static void exitApp(){
+    public static void exitApp() {
         Message message = new Message();
         message.what = APP_EXIT;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
