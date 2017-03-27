@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        app:theme="@style/AppTheme.AppBarOverlay">
+        app:theme="@style/AppTheme.ToolBar.Menu">
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout

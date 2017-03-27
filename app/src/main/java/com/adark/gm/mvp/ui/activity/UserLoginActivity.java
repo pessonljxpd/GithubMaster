@@ -112,35 +112,6 @@ public class UserLoginActivity extends WEActivity<UserLoginPresenter>
         mRememberView.setOnCheckedChangeListener(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.base_toolbar_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        switch (itemId) {
-            case R.id.action_search:
-                UiUtils.toastImage(R.drawable.ic_search_white_48dp, "Search");
-                break;
-            case R.id.action_notification:
-                UiUtils.toastImage(R.drawable.ic_notifications_white_48dp, "Notifications");
-                break;
-            case R.id.action_sort:
-                UiUtils.toastImage(R.drawable.ic_sort_white_48dp, "Sort");
-                break;
-            case R.id.action_refresh:
-                UiUtils.toastImage(R.drawable.ic_refresh_white_48dp, "Refresh");
-                break;
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     private void initGloballLayoutListener() {
         mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

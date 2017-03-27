@@ -1,28 +1,79 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme.Base" parent="@style/Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/color_white</item>
-        <item name="android:textColorSecondary">@color/color_ghostWhite</item>
-        <!--溢出菜单中的文字样式-->
+    <!--Toolbar OverflowMen-->
+    <style name="AppTheme.ToolBar.Menu" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- 设置-弹窗的背景-颜色-->
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <!-- 字体的颜色-->
         <item name="android:textColor">@color/color_white</item>
-        <item name="android:textSize">16dp</item>
-        <item name="actionOverflowMenuStyle">@style/AppTheme.PopupOverlay</item>
+        <!-- 字体大小-->
+        <item name="android:textSize">16sp</item>
+        <!-- 用于替换菜单的三个小白点，换成自已的图片-->
+        <item name="actionOverflowButtonStyle">@style/ActionButton.Overflow.Menu</item>
+        <!--用于控制menu弹出的位置，位于toolbar的下面，而不是上面-->
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <!-- 用于修改item默认的分割线-->
+        <item name="android:dropDownListViewStyle">@style/DropDownStyle</item>
+        <item name="dropDownListViewStyle">@style/DropDownStyle</item>
     </style>
 
-    <!--溢出菜单样式 -->
-    <style name="AppTheme.PopupOverlay" parent="@style/Widget.AppCompat.PopupMenu.Overflow">
+    <style name="ActionButton.Overflow.Menu" parent="@style/Widget.AppCompat.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_menu_overflow_light</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.Light.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>
-        <item name="android:popupBackground">@color/colorPrimary</item>
-        <!-- 弹出层垂直方向上的偏移，即在竖直方向上距离Toolbar的距离，值为负则会盖住Toolbar -->
         <item name="android:dropDownVerticalOffset">4dip</item>
-        <!-- 弹出层水平方向上的偏移，即距离屏幕左边的距离，负值会导致右边出现空隙 -->
-        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">2dip</item>
     </style>
 
+    <style name="DropDownStyle" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:divider">@color/grey_hex_e0</item>
+        <item name="android:dividerHeight">0.5dp</item>
+        <item name="android:listSelector">@drawable/overflow_menu_list</item>
+    </style>
+
+    <!--Trending TextStyle-->
+    <style name="TrendingItemTextViewTitleStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.TrendingItem.TextView.Title</item>
+    </style>
+
+    <style name="TrendingItemTextViewDescriptionStyle">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textAppearance">@style/TextAppearance.TrendingItem.TextView.Description</item>
+    </style>
+
+    <style name="TrendingItemTextViewDetailStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAppearance">@style/TextAppearance.TrendingItem.TextView.Detail</item>
+    </style>
+
+    <!--Trending TextAppearance-->
+    <style name="TextAppearance.TrendingItem.TextView.Title" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="TextAppearance.TrendingItem.TextView.Description" parent="@style/TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/grey_hex_30</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="TextAppearance.TrendingItem.TextView.Detail" parent="@style/TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/grey_hex_45</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <!--Trending Stars-->
+    <style name="TrendingStar" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:background">@drawable/stars_num_peroid</item>
+        <item name="android:button">@drawable/stars</item>
+        <item name="android:drawablePadding">@dimen/dimen_small</item>
+        <item name="android:textAppearance">@style/TextAppearance.TrendingItem.TextView.Detail</item>
+    </style>
+    
 </resources>

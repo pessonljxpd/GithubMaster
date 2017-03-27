@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".mvp.ui.activity.MainActivity">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_cl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".mvp.ui.activity.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/main_tb"
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:elevation="4dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:theme="@style/AppTheme.AppBarOverlay"/>
+        android:layout_height="?attr/actionBarSize">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/main_tb"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="4dp"
+            app:theme="@style/AppTheme.ToolBar.Menu"/>
+    </android.support.design.widget.AppBarLayout>
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/main_iv_image2d"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/color_navy"
+        tools:src="@mipmap/ic_launcher"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+    <include layout="@layout/trending_recycler_list_item"/>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,13 +1,16 @@
 package com.adark.gm.mvp.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
@@ -16,8 +19,12 @@ import com.adark.gm.di.component.DaggerMainComponent;
 import com.adark.gm.di.module.MainModule;
 import com.adark.gm.mvp.contract.MainContract;
 import com.adark.gm.mvp.presenter.MainPresenter;
+import com.adark.gm.util.SVG2Bitmap;
+import com.adark.gm.util.WeekDay;
 import com.jess.arms.utils.UiUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import butterknife.BindView;
 
@@ -41,6 +48,9 @@ public class MainActivity extends WEActivity<MainPresenter> implements MainContr
     @Nullable
     @BindView(R.id.main_tb)
     Toolbar mToolbar;
+    @Nullable
+    @BindView(R.id.main_iv_image2d)
+    ImageView mImageView;
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -61,6 +71,10 @@ public class MainActivity extends WEActivity<MainPresenter> implements MainContr
     @Override
     protected void initView() {
         setSupportActionBar(mToolbar);
+        mImageView.setImageBitmap(
+                SVG2Bitmap.get2DBitmap(this, SVG2Bitmap.SHOW_DATA, WeekDay.SUN,
+                                       Color.parseColor("#58F608"), Color.parseColor("#000000"),
+                                       SVG2Bitmap.getScreenWidth(this), 0, false));
     }
 
     @Override
@@ -126,5 +140,25 @@ public class MainActivity extends WEActivity<MainPresenter> implements MainContr
         finish();
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (menu != null) {
+            if (menu.getClass() == MenuBuilder.class) {
+                try {
+                    Method iconsVisibleMethod = menu.getClass().getDeclaredMethod("setOptionalIconsVisible",
+                                                                                  Boolean.TYPE);
+                    iconsVisibleMethod.setAccessible(true);
+                    iconsVisibleMethod.invoke(menu, true);
+                } catch (NoSuchMethodException pE) {
+                    pE.printStackTrace();
+                } catch (InvocationTargetException pE) {
+                    pE.printStackTrace();
+                } catch (IllegalAccessException pE) {
+                    pE.printStackTrace();
+                }
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 }

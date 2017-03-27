@@ -19,4 +19,27 @@
     <string name="menu_sort">sort</string>
     <string name="menu_refresh">refresh</string>
     <string name="github_login">Github login</string>
+    <string name="user_resume_contributions">Contributions</string>
+
+    <!--Contributions-->
+    <string name="one_year_total">1 year total</string>
+    <string name="busiest_day">Busiest day</string>
+    <string name="longest_streak">Longest streak</string>
+    <string name="no_contributions_this_year">No contributions this year</string>
+    <string name="last_contributed">Last contributed&#160;</string>
+    <string name="days_ago">&#160;days ago</string>
+    <string name="day_ago">&#160;day ago</string>
+    <string name="current_streak">Current streak</string>
+    <string name="days">days</string>
+    <string name="day">day</string>
+    <string name="contributions">contributions</string>
+    <string name="contribution">contribution</string>
+    <string name="remark_to">&#160;-&#160;</string>
+    <string name="click_to_set">Click to set user name</string>
+    <string name="one_year">1 Year</string>
+    <string name="today">Today</string>
+    <string name="current">Days</string>
+    <string name="followers">Followers</string>
+    <string name="stars">Stars</string>
 </resources>
+

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:paddingBottom="@dimen/dimen_large"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/dimen_large">
+
+    <LinearLayout
+        android:id="@+id/trending_tv_repo_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dimen_small"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_medium">
+
+            <TextView
+                style="@style/TrendingItemTextViewDetailStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="@dimen/dimen_medium"
+                android:drawableLeft="@drawable/dot"
+                android:drawablePadding="@dimen/dimen_small"
+                android:padding="@dimen/dimen_small"
+                tools:text="java"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/dimen_medium"
+                android:drawableLeft="@drawable/star_normal"
+                android:gravity="center"
+                android:padding="@dimen/dimen_small"
+                tools:text="51,732"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/fork_normal"
+                android:drawablePadding="@dimen/dimen_small"
+                android:padding="@dimen/dimen_small"
+                tools:text="23,133"/>
+
+            <LinearLayout
+                android:id="@+id/trending_ll_build_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_medium"
+                android:padding="@dimen/dimen_small">
+
+                <TextView
+                    android:id="@+id/textview_subtitle"
+                    style="@style/TrendingItemTextViewDetailStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Built by"/>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="@dimen/dimen_small"
+                    android:layout_marginStart="@dimen/dimen_small"
+                    android:src="@drawable/avatar_build_by"/>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="@dimen/dimen_small"
+                    android:layout_marginStart="@dimen/dimen_small"
+                    android:src="@drawable/avatar_build_by"/>
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="@dimen/dimen_small"
+                    android:layout_marginStart="@dimen/dimen_small"
+                    android:src="@drawable/avatar_build_by"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/trending_rl_repo_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <CheckBox
+            android:id="@+id/trending_cb_star"
+            style="@style/TrendingStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:ellipsize="middle"
+            android:gravity="center"
+            android:maxLength="10"
+            android:padding="@dimen/dimen_small"
+            tools:text="Today|81234"/>
+
+        <TextView
+            android:id="@+id/trending_tv_repo_title"
+            style="@style/TrendingItemTextViewTitleStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/dimen_medium"
+            android:layout_toLeftOf="@id/trending_cb_star"
+            android:padding="@dimen/dimen_small"
+            tools:text="This is the title"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/trending_tv_repo_desc"
+        style="@style/TrendingItemTextViewDescriptionStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/trending_tv_repo_bottom"
+        android:layout_below="@id/trending_rl_repo_title"
+        android:layout_marginTop="@dimen/dimen_medium"
+        android:gravity="center_vertical"
+        android:padding="@dimen/dimen_small"
+        tools:text="This is the subtitle"/>
+</RelativeLayout>
