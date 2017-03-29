@@ -6,6 +6,7 @@
     android:layout_height="150dp"
     android:background="?android:attr/selectableItemBackground"
     android:paddingBottom="@dimen/dimen_large"
+    android:descendantFocusability="blocksDescendants"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/dimen_large">
@@ -31,35 +32,41 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="@dimen/dimen_medium"
+                android:clickable="true"
                 android:drawableLeft="@drawable/dot"
                 android:drawablePadding="@dimen/dimen_small"
                 android:padding="@dimen/dimen_small"
-                tools:text="java"/>
+                android:text="java"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                style="@style/TrendingItemTextViewDetailStyle"
                 android:layout_marginRight="@dimen/dimen_medium"
+                android:clickable="true"
                 android:drawableLeft="@drawable/star_normal"
                 android:gravity="center"
                 android:padding="@dimen/dimen_small"
-                tools:text="51,732"/>
+                android:text="51,732"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                style="@style/TrendingItemTextViewDetailStyle"
+                android:clickable="true"
                 android:drawableLeft="@drawable/fork_normal"
                 android:drawablePadding="@dimen/dimen_small"
                 android:padding="@dimen/dimen_small"
-                tools:text="23,133"/>
+                android:text="23,133"/>
 
             <LinearLayout
                 android:id="@+id/trending_ll_build_by"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_medium"
+                android:clickable="true"
                 android:padding="@dimen/dimen_small">
 
                 <TextView
@@ -96,27 +103,31 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_darkGray"
+        />
+
     <RelativeLayout
         android:id="@+id/trending_rl_repo_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentStart="true">
 
         <CheckBox
             android:id="@+id/trending_cb_star"
             style="@style/TrendingStar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:ellipsize="middle"
+            android:layout_centerVertical="true"
             android:gravity="center"
-            android:maxLength="10"
-            android:padding="@dimen/dimen_small"
-            tools:text="Today|81234"/>
+            android:maxLength="4"
+            android:text="1334"/>
 
         <TextView
             android:id="@+id/trending_tv_repo_title"
@@ -126,10 +137,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
             android:layout_marginRight="@dimen/dimen_medium"
             android:layout_toLeftOf="@id/trending_cb_star"
             android:padding="@dimen/dimen_small"
-            tools:text="This is the title"/>
+            android:text="This is the title,This is the subtitleThis is the subtitleThis is the subtitleThis is the subtitle"/>
 
     </RelativeLayout>
 
@@ -143,5 +155,5 @@
         android:layout_marginTop="@dimen/dimen_medium"
         android:gravity="center_vertical"
         android:padding="@dimen/dimen_small"
-        tools:text="This is the subtitle"/>
+        android:text="This is the subtitle,This is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitleThis is the subtitle"/>
 </RelativeLayout>

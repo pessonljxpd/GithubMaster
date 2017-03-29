@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-public class AdapterViewPager extends FragmentStatePagerAdapter {
+public class DefaultViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<BaseFragment> list;
     private CharSequence[] mTitles;
 
-    public AdapterViewPager(FragmentManager fragmentManager) {
+    public DefaultViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 

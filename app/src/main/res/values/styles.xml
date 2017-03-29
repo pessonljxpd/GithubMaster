@@ -64,16 +64,15 @@
     </style>
 
     <style name="TextAppearance.TrendingItem.TextView.Detail" parent="@style/TextAppearance.AppCompat.Small">
-        <item name="android:textColor">@color/grey_hex_45</item>
+        <item name="android:textColor">@color/grey_hex_65</item>
         <item name="android:textSize">@dimen/text_small</item>
     </style>
 
     <!--Trending Stars-->
     <style name="TrendingStar" parent="@style/Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:background">@drawable/stars_num_peroid</item>
         <item name="android:button">@drawable/stars</item>
-        <item name="android:drawablePadding">@dimen/dimen_small</item>
-        <item name="android:textAppearance">@style/TextAppearance.TrendingItem.TextView.Detail</item>
+        <item name="android:textColor">@color/grey_hex_65</item>
+        <item name="android:textSize">@dimen/text_small</item>
     </style>
-    
+
 </resources>

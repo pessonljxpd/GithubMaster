@@ -6,6 +6,7 @@
     android:id="@+id/main_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".mvp.ui.activity.MainActivity">
 
 
@@ -20,28 +21,57 @@
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             app:theme="@style/AppTheme.ToolBar.Menu"/>
+
     </android.support.design.widget.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/main_iv_image2d"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@color/color_navy"
-        tools:src="@mipmap/ic_launcher"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <include layout="@layout/trending_recycler_list_item"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <ImageView
+                android:id="@+id/main_iv_image2d"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@color/color_navy"
+                tools:src="@mipmap/ic_launcher"/>
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <include layout="@layout/trending_recycler_list_item"/>
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <include layout="@layout/trending_recycler_list_item"/>
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <include layout="@layout/trending_recycler_list_item"/>
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <include layout="@layout/trending_recycler_list_item"/>
 
-    <include layout="@layout/trending_recycler_list_item"/>
+            <include layout="@layout/trending_recycler_list_item"/>
 
+            <include layout="@layout/trending_recycler_list_item"/>
+
+            <include layout="@layout/trending_recycler_list_item"/>
+
+            <TextView
+                style="@style/TrendingItemTextViewDetailStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_medium"
+                android:text="--------已经到底了--------"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom"
+        app:bb_behavior="shifting|shy"
+        app:bb_tabXmlResource="@xml/bottombar_tabs"
+        />
 </android.support.design.widget.CoordinatorLayout>

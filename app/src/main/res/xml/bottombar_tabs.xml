@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+
+    <tab
+        icon="@drawable/ic_feed_24"
+        id="@+id/tab_feed"
+        title="@string/bottom_bar_feed"/>
+
+    <tab
+        icon="@drawable/ic_trending_24"
+        id="@+id/tab_trending"
+        title="@string/bottom_bar_trending"/>
+
+    <tab
+        icon="@drawable/ic_user_24"
+        id="@+id/tab_user"
+        title="@string/bottom_bar_user"/>
+
+</tabs>

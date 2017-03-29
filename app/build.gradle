@@ -51,5 +51,6 @@ dependencies {
     compile 'com.thefinestartist:finestwebview:1.2.7'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'io.github.rockerhieu:emojicon:1.4.0'
+    compile 'com.roughike:bottom-bar:2.2.0'
     compile project(':mvparm')
 }

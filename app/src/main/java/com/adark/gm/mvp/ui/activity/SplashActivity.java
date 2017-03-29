@@ -19,6 +19,7 @@ import com.jess.arms.utils.UiUtils;
 
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.jess.arms.utils.Preconditions.checkNotNull;
 
@@ -59,18 +60,13 @@ public class SplashActivity extends WEActivity<SplashPresenter> implements Splas
 
     @Override
     protected void initView() {
-        initOnClickListener();
-        mLinearLayout.setOnClickListener(mOnClickListener);
     }
 
-    private void initOnClickListener() {
-        mOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity.class);
-                launchActivity(intent);
-            }
-        };
+    @OnClick(R.id.splash_ll_bottom)
+    public void loadMainActivity() {
+        Intent intent = new Intent(mContext, MainActivity.class);
+        launchActivity(intent);
+        killMyself();
     }
 
     @Override
