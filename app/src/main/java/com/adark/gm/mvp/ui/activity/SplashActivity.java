@@ -1,9 +1,13 @@
 package com.adark.gm.mvp.ui.activity;
 
 import android.content.Intent;
+import android.icu.text.NumberFormat;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -37,10 +41,13 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 public class SplashActivity extends GMActivity<SplashPresenter> implements SplashContract.View {
     @Nullable
+    @BindView(R.id.splash_btn_jump)
+    AppCompatButton mBtnCountDownJump;
+    @Nullable
     @BindView(R.id.splash_ll_bottom)
     LinearLayout mLinearLayout;
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private View.OnClickListener mOnClickListener;
+    private SplashCountDownTimer mCountDownTimer;
 
     @Override
     protected void setupActivityComponent(AppComponent pAppComponent) {
@@ -59,30 +66,21 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
 
     @Override
     protected void initView() {
-    }
-
-    @OnClick({R.id.splash_ll_bottom, R.id.splash_btn_jump})
-    public void loadMainActivity(View pView) {
-        if (!noDoubleClick()) {
-            return;
-        }
-        int id = pView.getId();
-        switch (id) {
-            case R.id.splash_btn_jump:
-                Intent intent = new Intent(mContext, MainActivity.class);
-                launchActivity(intent);
-                break;
-            case R.id.splash_ll_bottom:
-                UiUtils.toastText("jump to main activity");
-            break;
-            default:
-                break;
-        }
+        mCountDownTimer = new SplashCountDownTimer(3000, 1000);
+        mCountDownTimer.start();
     }
 
     @Override
     protected void initData() {
+    }
 
+    @OnClick(R.id.splash_btn_jump)
+    public void loadMainActivity(View pView) {
+        if (!noDoubleClick()) return;
+        if (pView.getId() == R.id.splash_btn_jump) {
+            onCountDownTimerCancel();
+            launchActivity(new Intent(mContext, MainActivity.class));
+        }
     }
 
     @Override
@@ -93,6 +91,10 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
     @Override
     public void hideLoading() {
 
+    }
+
+    private void onCountDownTimerCancel() {
+        mCountDownTimer.cancel();
     }
 
     @Override
@@ -109,5 +111,21 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
     public void launchActivity(@NonNull Intent pIntent) {
         checkNotNull(pIntent);
         UiUtils.startActivity(pIntent);
+    }
+
+    class SplashCountDownTimer extends CountDownTimer {
+        public SplashCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mBtnCountDownJump.setText((millisUntilFinished / 1000) + "s");
+        }
+
+        @Override
+        public void onFinish() {
+            launchActivity(new Intent(mContext, MainActivity.class));
+        }
     }
 }
