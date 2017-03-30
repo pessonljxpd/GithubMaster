@@ -23,21 +23,10 @@ public class ZipHelper {
      * @return
      */
     public static String decompressToStringForZlib(byte[] bytesToDecompress) {
-        byte[] bytesDecompressed = decompressForZlib
-                (
-                        bytesToDecompress
-                );
-
+        byte[] bytesDecompressed = decompressForZlib(bytesToDecompress);
         String returnValue = null;
-
         try {
-            returnValue = new String
-                    (
-                            bytesDecompressed,
-                            0,
-                            bytesDecompressed.length,
-                            "UTF-8"
-                    );
+            returnValue = new String(bytesDecompressed, 0, bytesDecompressed.length, "UTF-8");
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }
@@ -54,34 +43,17 @@ public class ZipHelper {
      */
     public static byte[] decompressForZlib(byte[] bytesToDecompress) {
         byte[] returnValues = null;
-
         Inflater inflater = new Inflater();
-
         int numberOfBytesToDecompress = bytesToDecompress.length;
-
-        inflater.setInput
-                (
-                        bytesToDecompress,
-                        0,
-                        numberOfBytesToDecompress
-                );
-
+        inflater.setInput(bytesToDecompress, 0, numberOfBytesToDecompress);
         int bufferSizeInBytes = numberOfBytesToDecompress;
-
         int numberOfBytesDecompressedSoFar = 0;
         List<Byte> bytesDecompressedSoFar = new ArrayList<Byte>();
-
         try {
             while (inflater.needsInput() == false) {
                 byte[] bytesDecompressedBuffer = new byte[bufferSizeInBytes];
-
-                int numberOfBytesDecompressedThisTime = inflater.inflate
-                        (
-                                bytesDecompressedBuffer
-                        );
-
+                int numberOfBytesDecompressedThisTime = inflater.inflate(bytesDecompressedBuffer);
                 numberOfBytesDecompressedSoFar += numberOfBytesDecompressedThisTime;
-
                 for (int b = 0; b < numberOfBytesDecompressedThisTime; b++) {
                     bytesDecompressedSoFar.add(bytesDecompressedBuffer[b]);
                 }
@@ -113,19 +85,9 @@ public class ZipHelper {
         deflater.finish();
 
         byte[] bytesCompressed = new byte[Short.MAX_VALUE];
-
         int numberOfBytesAfterCompression = deflater.deflate(bytesCompressed);
-
         byte[] returnValues = new byte[numberOfBytesAfterCompression];
-
-        System.arraycopy
-                (
-                        bytesCompressed,
-                        0,
-                        returnValues,
-                        0,
-                        numberOfBytesAfterCompression
-                );
+        System.arraycopy(bytesCompressed, 0, returnValues, 0, numberOfBytesAfterCompression);
 
         return returnValues;
     }
@@ -140,11 +102,7 @@ public class ZipHelper {
         byte[] returnValues = null;
 
         try {
-
-            returnValues = compressForZlib
-                    (
-                            stringToCompress.getBytes("UTF-8")
-                    );
+            returnValues = compressForZlib(stringToCompress.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException uee) {
             uee.printStackTrace();
         }

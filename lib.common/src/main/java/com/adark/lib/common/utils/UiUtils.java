@@ -38,7 +38,7 @@ import static com.adark.lib.common.base.AppManager.START_ACTIVITY;
  * Created by jess on 2015/11/23.
  */
 public class UiUtils {
-    static public Toast mToast;
+    public static Toast mToast;
 
     /**
      * 设置hint大小
@@ -464,5 +464,4 @@ public class UiUtils {
         message.what = APP_EXIT;
         EventBus.getDefault().post(message, APPMANAGER_MESSAGE);
     }
-
 }
