@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
-import com.adark.gm.common.WEActivity;
+import com.adark.gm.common.GMActivity;
 import com.adark.gm.di.component.DaggerUserLoginComponent;
 import com.adark.gm.di.module.UserLoginModule;
 import com.adark.gm.mvp.contract.UserLoginContract;
@@ -45,7 +45,7 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
  * Created by Shelly on 2017-3-15.
  */
 
-public class UserLoginActivity extends WEActivity<UserLoginPresenter>
+public class UserLoginActivity extends GMActivity<UserLoginPresenter>
         implements UserLoginContract.View, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     // UI references.
     @Nullable

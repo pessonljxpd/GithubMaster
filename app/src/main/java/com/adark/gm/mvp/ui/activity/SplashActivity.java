@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
-import com.adark.gm.common.WEActivity;
+import com.adark.gm.common.GMActivity;
 import com.adark.gm.di.component.DaggerSplashComponent;
 import com.adark.gm.di.module.SplashModule;
 import com.adark.gm.mvp.contract.SplashContract;
@@ -34,7 +34,7 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
  * Created by Shelly on 2017-3-22.
  */
 
-public class SplashActivity extends WEActivity<SplashPresenter> implements SplashContract.View {
+public class SplashActivity extends GMActivity<SplashPresenter> implements SplashContract.View {
     @Nullable
     @BindView(R.id.splash_ll_bottom)
     LinearLayout mLinearLayout;

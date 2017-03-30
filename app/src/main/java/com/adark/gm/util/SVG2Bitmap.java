@@ -1,8 +1,6 @@
 package com.adark.gm.util;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,24 +16,18 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ThumbnailUtils;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
-import android.webkit.CookieManager;
 
 import com.adark.gm.R;
-import com.adark.gm.common.WEApplication;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.adark.gm.common.GMApplication;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -641,7 +633,7 @@ public class SVG2Bitmap {
      * @return The string.
      */
     public static String getString(int resId) {
-        return WEApplication.getContext().getResources().getString(resId);
+        return GMApplication.getContext().getResources().getString(resId);
     }
 
     /**
@@ -1231,7 +1223,7 @@ public class SVG2Bitmap {
      * @return Px.
      */
     public static float getDimen(int resId) {
-        return WEApplication.getContext().getResources().getDimensionPixelSize(resId);
+        return GMApplication.getContext().getResources().getDimensionPixelSize(resId);
     }
 
     /**

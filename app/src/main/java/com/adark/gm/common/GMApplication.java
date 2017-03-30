@@ -19,11 +19,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import timber.log.Timber;
 
-/**
- * Created by jess on 8/5/16 11:07
- * contact with jess.yan.effort@gmail.com
- */
-public class WEApplication extends BaseApplication {
+public class GMApplication extends BaseApplication {
     private AppComponent mAppComponent;
     private RefWatcher mRefWatcher;//leakCanary观察器
 
@@ -61,7 +57,7 @@ public class WEApplication extends BaseApplication {
      * 获得leakCanary观察器
      */
     public static RefWatcher getRefWatcher(Context context) {
-        WEApplication application = (WEApplication) context.getApplicationContext();
+        GMApplication application = (GMApplication) context.getApplicationContext();
         return application.mRefWatcher;
     }
 

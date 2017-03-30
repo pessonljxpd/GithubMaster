@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
-import com.adark.gm.common.WEFragment;
+import com.adark.gm.common.GMFragment;
 import com.adark.gm.di.component.DaggerTrendingComponent;
 import com.adark.gm.di.module.TrendingModule;
 import com.adark.gm.mvp.contract.TrendingContract;
@@ -30,7 +30,7 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
  * Created by Shelly on 2017-3-22.
  */
 
-public class TrendingFragment extends WEFragment<TrendingPresenter> implements TrendingContract.View {
+public class TrendingFragment extends GMFragment<TrendingPresenter> implements TrendingContract.View {
 
 
     public static TrendingFragment newInstance() {

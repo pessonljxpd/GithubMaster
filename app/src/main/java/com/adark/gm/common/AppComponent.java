@@ -17,9 +17,6 @@ import javax.inject.Singleton;
 import com.adark.lib.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
-/**
- * Created by jess on 8/4/16.
- */
 @Singleton
 @Component(modules = {AppModule.class, ClientModule.class, ServiceModule.class, ImageModule.class,
         CacheModule.class, GlobeConfigModule.class})

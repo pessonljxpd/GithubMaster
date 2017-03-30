@@ -12,7 +12,7 @@ import butterknife.BindView;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
-import com.adark.gm.common.WEActivity;
+import com.adark.gm.common.GMActivity;
 import com.adark.gm.di.component.DaggerUserComponent;
 import com.adark.gm.di.module.UserModule;
 import com.adark.gm.mvp.contract.UserContract;
@@ -42,7 +42,7 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
  * Created by Shelly on 2017-3-14.
  */
 
-public class UserActivity extends WEActivity<UserPresenter>
+public class UserActivity extends GMActivity<UserPresenter>
         implements UserContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @Nullable

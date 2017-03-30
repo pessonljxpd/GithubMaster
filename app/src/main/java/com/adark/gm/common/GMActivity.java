@@ -3,15 +3,11 @@ package com.adark.gm.common;
 import com.adark.lib.common.base.BaseActivity;
 import com.adark.lib.common.mvp.BasePresenter;
 
-/**
- * Created by jess on 8/5/16 13:13
- * contact with jess.yan.effort@gmail.com
- */
-public abstract class WEActivity<P extends BasePresenter> extends BaseActivity<P> {
-    protected WEApplication mWeApplication;
+public abstract class GMActivity<P extends BasePresenter> extends BaseActivity<P> {
+    protected GMApplication mWeApplication;
     @Override
     protected void ComponentInject() {
-        mWeApplication = (WEApplication) getApplication();
+        mWeApplication = (GMApplication) getApplication();
         setupActivityComponent(mWeApplication.getAppComponent());
     }
 

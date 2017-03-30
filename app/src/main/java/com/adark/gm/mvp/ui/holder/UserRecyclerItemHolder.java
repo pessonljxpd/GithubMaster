@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.adark.gm.R;
-import com.adark.gm.common.WEApplication;
+import com.adark.gm.common.GMApplication;
 import com.adark.gm.mvp.model.entity.User;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.adark.lib.common.base.BaseHolder;
@@ -24,11 +24,11 @@ public class UserRecyclerItemHolder extends BaseHolder<User> {
     @Nullable @BindView(R.id.user_tv_name) TextView mUserTvName;
 
     private ImageLoader mImageLoader;
-    private WEApplication mApplication;
+    private GMApplication mApplication;
 
     public UserRecyclerItemHolder(View itemView) {
         super(itemView);
-        mApplication = (WEApplication) itemView.getContext().getApplicationContext();
+        mApplication = (GMApplication) itemView.getContext().getApplicationContext();
         mImageLoader = mApplication.getAppComponent().imageLoader();
     }
 

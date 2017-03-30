@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
-import com.adark.gm.common.WEActivity;
+import com.adark.gm.common.GMActivity;
 import com.adark.gm.di.component.DaggerMainComponent;
 import com.adark.gm.di.module.MainModule;
 import com.adark.gm.mvp.contract.MainContract;
@@ -41,7 +41,7 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
  * Created by Shelly on 2017-3-22.
  */
 
-public class MainActivity extends WEActivity<MainPresenter> implements MainContract.View {
+public class MainActivity extends GMActivity<MainPresenter> implements MainContract.View {
 
     @Nullable
     @BindView(R.id.common_toolbar)
