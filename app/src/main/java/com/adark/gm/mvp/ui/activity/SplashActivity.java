@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
@@ -60,18 +61,29 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
     protected void initView() {
     }
 
-    @OnClick(R.id.splash_ll_bottom)
-    public void loadMainActivity() {
-        Intent intent = new Intent(mContext, MainActivity.class);
-        launchActivity(intent);
-        killMyself();
+    @OnClick({R.id.splash_ll_bottom, R.id.splash_btn_jump})
+    public void loadMainActivity(View pView) {
+        if (!noDoubleClick()) {
+            return;
+        }
+        int id = pView.getId();
+        switch (id) {
+            case R.id.splash_btn_jump:
+                Intent intent = new Intent(mContext, MainActivity.class);
+                launchActivity(intent);
+                break;
+            case R.id.splash_ll_bottom:
+                UiUtils.toastText("jump to main activity");
+            break;
+            default:
+                break;
+        }
     }
 
     @Override
     protected void initData() {
 
     }
-
 
     @Override
     public void showLoading() {
@@ -81,6 +93,10 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void killMyself() {
     }
 
     @Override
@@ -94,11 +110,4 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
         checkNotNull(pIntent);
         UiUtils.startActivity(pIntent);
     }
-
-    @Override
-    public void killMyself() {
-        finish();
-    }
-
-
 }

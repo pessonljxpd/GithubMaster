@@ -23,6 +23,8 @@ import com.zhy.autolayout.AutoRelativeLayout;
 
 import org.simple.eventbus.EventBus;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
@@ -45,6 +47,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private static final String LAYOUT_FRAMELAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVELAYOUT = "RelativeLayout";
     public static final String IS_NOT_ADD_ACTIVITY_LIST = "is_add_activity_list";//是否加入到activity的list，管理
+
+    //    根据具体业务可以定制最小点击延迟的时长
+    protected long mMiniClickDelayTime = 1000L;
+    private long mLastClickTime = 0L;
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -227,15 +233,64 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
 
     protected void onNetworkConnected(int pNetworkType) {
         Timber.tag(TAG).d("NetworkType=" + pNetworkType);
+        switch (pNetworkType) {
+            case NetworkConstants.NETWORK_CLASS_2_G:
+            case NetworkConstants.NETWORK_CLASS_3_G:
+            case NetworkConstants.NETWORK_CLASS_4_G:
+                onMoblieNetworkConnected(pNetworkType);
+                break;
+            case NetworkConstants.NETWORK_WIFI:
+                onWIFIConnected();
+                break;
+            default:
+                break;
+        }
         if (pNetworkType == NetworkConstants.NETWORK_WIFI) {
-            UiUtils.toastTextWithLong("WIFI已连接");
+            onWIFIConnected();
         } else {
             UiUtils.toastImage(R.drawable.send, "当前正在使用移动网络");
         }
     }
 
+    protected void onMoblieNetworkConnected(int pNetworkType) {
+        //TODO 子类根据自己需求选择是否需要重写此方法
+        Timber.tag(TAG).d("当前正在使用移动网络");
+        if (pNetworkType == NetworkConstants.NETWORK_CLASS_2_G) {
+            onWeakMobileNetConnect();
+        }
+    }
+
+
+    protected void onWeakMobileNetConnect() {
+        //TODO 子类根据自己需求选择是否需要重写此方法
+        Timber.tag(TAG).d("当前移动网络网速较差，是否考虑开启极速模式？");
+    }
+
+    protected void onWIFIConnected() {
+        //TODO 子类根据自己需求选择是否需要重写此方法
+        Timber.tag(TAG).d("WIFI已连接");
+    }
+
     protected void onNetworkDisconnect() {
+        //TODO 子类根据自己需求选择是否需要重写此方法
         Timber.tag(TAG).d("onNetworkDisconnect");
-        UiUtils.toastTextWithLong("网络连接已经断开");
+    }
+
+    /**
+     * 判断是否重复点击
+     *
+     * @return
+     */
+    protected boolean noDoubleClick() {
+        boolean noDoubleClick = false;
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        if (currentTime - mLastClickTime > mMiniClickDelayTime) {
+            mLastClickTime = currentTime;
+            noDoubleClick = true;
+        } else {
+            noDoubleClick = false;
+        }
+
+        return noDoubleClick;
     }
 }

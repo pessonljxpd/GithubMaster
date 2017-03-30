@@ -134,11 +134,6 @@ public class MainActivity extends GMActivity<MainPresenter> implements MainContr
     }
 
     @Override
-    public void killMyself() {
-        finish();
-    }
-
-    @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (menu != null) {
             if (menu.getClass() == MenuBuilder.class) {
@@ -159,4 +154,13 @@ public class MainActivity extends GMActivity<MainPresenter> implements MainContr
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @Override
+    public void onBackPressed() {
+        mWeApplication.getAppManager().AppExit();
+        super.onBackPressed();
+    }
+
+    @Override
+    public void killMyself() {
+    }
 }
