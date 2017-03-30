@@ -1,8 +1,8 @@
 package com.adark.gm.mvp.contract;
 
 import com.adark.gm.mvp.model.entity.User;
-import com.jess.arms.mvp.BaseView;
-import com.jess.arms.mvp.IModel;
+import com.adark.lib.common.mvp.BaseView;
+import com.adark.lib.common.mvp.IModel;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import rx.Observable;
 

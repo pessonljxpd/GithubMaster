@@ -2,11 +2,8 @@ package com.adark.gm.di.module;
 
 import com.adark.gm.mvp.contract.SplashContract;
 import com.adark.gm.mvp.model.SplashModel;
-import com.google.gson.Gson;
 
-import android.app.Application;
-
-import com.jess.arms.di.scope.ActivityScope;
+import com.adark.lib.common.di.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;

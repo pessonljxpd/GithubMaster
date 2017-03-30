@@ -1,28 +1,23 @@
 package com.adark.gm.mvp.presenter;
 
 import android.app.Application;
-import android.widget.Toast;
-import com.adark.gm.common.DaggerAppComponent;
+
 import com.adark.gm.mvp.contract.UserLoginContract;
 import com.adark.gm.mvp.model.entity.User;
 import com.google.gson.Gson;
-import com.jess.arms.base.AppManager;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.utils.PermissionUtil;
-import com.jess.arms.utils.RxUtils;
-import com.jess.arms.widget.imageloader.ImageLoader;
-import java.util.concurrent.TimeUnit;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import com.adark.lib.common.base.AppManager;
+import com.adark.lib.common.di.scope.ActivityScope;
+import com.adark.lib.common.mvp.BasePresenter;
+import com.adark.lib.common.utils.RxUtils;
+import com.adark.lib.common.widget.imageloader.ImageLoader;
+
+import com.adark.lib.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import com.adark.lib.rxerrorhandler.handler.ErrorHandleSubscriber;
+import com.adark.lib.rxerrorhandler.handler.RetryWithDelay;
 import okhttp3.Credentials;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

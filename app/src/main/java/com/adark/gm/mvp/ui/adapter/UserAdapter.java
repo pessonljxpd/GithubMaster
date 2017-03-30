@@ -4,8 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import com.adark.gm.R;
 import com.adark.gm.mvp.ui.holder.UserRecyclerItemHolder;
-import com.jess.arms.base.BaseHolder;
-import com.jess.arms.base.DefaultAdapter;
+import com.adark.lib.common.base.BaseHolder;
+import com.adark.lib.common.base.DefaultAdapter;
 import java.util.List;
 
 /**

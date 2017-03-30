@@ -3,7 +3,7 @@ package com.adark.gm.di.component;
 import com.adark.gm.common.AppComponent;
 import com.adark.gm.di.module.MainModule;
 import com.adark.gm.mvp.ui.activity.MainActivity;
-import com.jess.arms.di.scope.ActivityScope;
+import com.adark.lib.common.di.scope.ActivityScope;
 
 import dagger.Component;
 

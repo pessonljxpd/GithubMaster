@@ -6,9 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.CompoundButton;
@@ -23,17 +20,17 @@ import com.adark.gm.di.module.UserLoginModule;
 import com.adark.gm.mvp.contract.UserLoginContract;
 import com.adark.gm.mvp.presenter.UserLoginPresenter;
 import com.dd.CircularProgressButton;
-import com.jess.arms.utils.DeviceUtils;
-import com.jess.arms.utils.UiUtils;
-import com.jess.arms.widget.customfonts.MyCheckBox;
-import com.jess.arms.widget.customfonts.MyEditText;
-import com.jess.arms.widget.customfonts.MyTextView;
+import com.adark.lib.common.utils.DeviceUtils;
+import com.adark.lib.common.utils.UiUtils;
+import com.adark.lib.common.widget.customfonts.MyCheckBox;
+import com.adark.lib.common.widget.customfonts.MyEditText;
+import com.adark.lib.common.widget.customfonts.MyTextView;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.thefinestartist.finestwebview.FinestWebView;
 
 import butterknife.BindView;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

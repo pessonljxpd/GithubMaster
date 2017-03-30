@@ -1,8 +1,8 @@
 package com.adark.gm.mvp.contract;
 
-import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.mvp.BaseView;
-import com.jess.arms.mvp.IModel;
+import com.adark.lib.common.base.DefaultAdapter;
+import com.adark.lib.common.mvp.BaseView;
+import com.adark.lib.common.mvp.IModel;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

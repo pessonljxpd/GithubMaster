@@ -1,27 +1,22 @@
 package com.adark.gm.common;
 
 import android.content.Context;
-import android.text.TextUtils;
+
 import com.adark.gm.BuildConfig;
 import com.adark.gm.di.module.CacheModule;
 import com.adark.gm.di.module.ServiceModule;
 import com.adark.gm.mvp.model.api.API;
-import com.jess.arms.base.BaseApplication;
-import com.jess.arms.di.module.GlobeConfigModule;
-import com.jess.arms.http.GlobeHttpHandler;
-import com.jess.arms.utils.UiUtils;
+import com.adark.lib.common.base.BaseApplication;
+import com.adark.lib.common.di.module.GlobeConfigModule;
+import com.adark.lib.common.http.GlobeHttpHandler;
+import com.adark.lib.common.utils.UiUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
-import java.io.IOException;
-import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
-import okhttp3.Authenticator;
-import okhttp3.Credentials;
+
+import com.adark.lib.rxerrorhandler.handler.listener.ResponseErroListener;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import timber.log.Timber;
 
 /**

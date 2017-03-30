@@ -1,7 +1,7 @@
 package com.adark.gm.common;
 
-import com.jess.arms.base.BaseFragment;
-import com.jess.arms.mvp.BasePresenter;
+import com.adark.lib.common.base.BaseFragment;
+import com.adark.lib.common.mvp.BasePresenter;
 import com.squareup.leakcanary.RefWatcher;
 
 /**

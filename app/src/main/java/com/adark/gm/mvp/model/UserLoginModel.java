@@ -6,14 +6,13 @@ import com.adark.gm.mvp.model.api.cache.CacheManager;
 import com.adark.gm.mvp.model.api.service.ServiceManager;
 import com.adark.gm.mvp.model.entity.User;
 import com.google.gson.Gson;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BaseModel;
+import com.adark.lib.common.di.scope.ActivityScope;
+import com.adark.lib.common.mvp.BaseModel;
 import javax.inject.Inject;
-import retrofit2.Call;
-import rx.Observable;
-import rx.observers.Observers;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import rx.Observable;
+
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

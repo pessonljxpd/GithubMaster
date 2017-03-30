@@ -7,8 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import butterknife.BindView;
 
@@ -19,8 +17,8 @@ import com.adark.gm.di.component.DaggerUserComponent;
 import com.adark.gm.di.module.UserModule;
 import com.adark.gm.mvp.contract.UserContract;
 import com.adark.gm.mvp.presenter.UserPresenter;
-import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.utils.UiUtils;
+import com.adark.lib.common.base.DefaultAdapter;
+import com.adark.lib.common.utils.UiUtils;
 import com.paginate.Paginate;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -29,7 +27,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import timber.log.Timber;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

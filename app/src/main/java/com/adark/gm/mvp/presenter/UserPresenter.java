@@ -1,24 +1,24 @@
 package com.adark.gm.mvp.presenter;
 
 import android.app.Application;
-import android.widget.Toast;
+
 import com.adark.gm.mvp.contract.UserContract;
 import com.adark.gm.mvp.model.entity.User;
 import com.adark.gm.mvp.ui.adapter.UserAdapter;
-import com.jess.arms.base.AppManager;
-import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.utils.PermissionUtil;
-import com.jess.arms.utils.RxUtils;
-import com.jess.arms.widget.imageloader.ImageLoader;
-import dagger.Module;
+import com.adark.lib.common.base.AppManager;
+import com.adark.lib.common.base.DefaultAdapter;
+import com.adark.lib.common.di.scope.ActivityScope;
+import com.adark.lib.common.mvp.BasePresenter;
+import com.adark.lib.common.utils.PermissionUtil;
+import com.adark.lib.common.utils.RxUtils;
+import com.adark.lib.common.widget.imageloader.ImageLoader;
+
 import java.util.ArrayList;
 import java.util.List;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import com.adark.lib.rxerrorhandler.core.RxErrorHandler;
 import javax.inject.Inject;
-import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
-import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
+import com.adark.lib.rxerrorhandler.handler.ErrorHandleSubscriber;
+import com.adark.lib.rxerrorhandler.handler.RetryWithDelay;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
 import rx.schedulers.Schedulers;

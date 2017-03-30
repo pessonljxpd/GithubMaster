@@ -1,7 +1,7 @@
 package com.adark.gm.common;
 
-import com.jess.arms.base.BaseActivity;
-import com.jess.arms.mvp.BasePresenter;
+import com.adark.lib.common.base.BaseActivity;
+import com.adark.lib.common.mvp.BasePresenter;
 
 /**
  * Created by jess on 8/5/16 13:13

@@ -9,9 +9,9 @@ import com.adark.gm.R;
 import com.adark.gm.common.WEApplication;
 import com.adark.gm.mvp.model.entity.User;
 import com.jakewharton.rxbinding.widget.RxTextView;
-import com.jess.arms.base.BaseHolder;
-import com.jess.arms.widget.imageloader.ImageLoader;
-import com.jess.arms.widget.imageloader.glide.GlideImageConfig;
+import com.adark.lib.common.base.BaseHolder;
+import com.adark.lib.common.widget.imageloader.ImageLoader;
+import com.adark.lib.common.widget.imageloader.glide.GlideImageConfig;
 import rx.Observable;
 
 /**

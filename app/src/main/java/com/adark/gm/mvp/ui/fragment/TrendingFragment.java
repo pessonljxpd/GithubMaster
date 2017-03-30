@@ -1,9 +1,7 @@
 package com.adark.gm.mvp.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,10 +12,10 @@ import com.adark.gm.di.component.DaggerTrendingComponent;
 import com.adark.gm.di.module.TrendingModule;
 import com.adark.gm.mvp.contract.TrendingContract;
 import com.adark.gm.mvp.presenter.TrendingPresenter;
-import com.jess.arms.base.DefaultAdapter;
-import com.jess.arms.utils.UiUtils;
+import com.adark.lib.common.base.DefaultAdapter;
+import com.adark.lib.common.utils.UiUtils;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同

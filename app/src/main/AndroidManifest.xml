@@ -63,7 +63,7 @@
             android:value="1920"/>
         <!--glide配置-->
         <meta-data
-            android:name="com.jess.arms.widget.imageloader.glide.GlideConfiguration"
+            android:name="com.adark.lib.common.widget.imageloader.glide.GlideConfiguration"
             android:value="GlideModule"/>
     </application>
 

@@ -2,10 +2,7 @@ package com.adark.gm.di.module;
 
 import com.adark.gm.mvp.contract.UserContract;
 import com.adark.gm.mvp.model.UserModel;
-import com.adark.gm.mvp.presenter.UserPresenter;
-import com.google.gson.Gson;
-import android.app.Application;
-import com.jess.arms.di.scope.ActivityScope;
+import com.adark.lib.common.di.scope.ActivityScope;
 
 import dagger.Module;
 import dagger.Provides;

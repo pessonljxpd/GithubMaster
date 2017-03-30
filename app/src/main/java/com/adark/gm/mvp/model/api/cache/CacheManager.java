@@ -1,6 +1,6 @@
 package com.adark.gm.mvp.model.api.cache;
 
-import com.jess.arms.http.BaseCacheManager;
+import com.adark.lib.common.http.BaseCacheManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

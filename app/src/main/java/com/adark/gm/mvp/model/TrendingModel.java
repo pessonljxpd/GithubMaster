@@ -6,12 +6,12 @@ import com.adark.gm.mvp.contract.TrendingContract;
 import com.adark.gm.mvp.model.api.cache.CacheManager;
 import com.adark.gm.mvp.model.api.service.ServiceManager;
 import com.google.gson.Gson;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BaseModel;
+import com.adark.lib.common.di.scope.ActivityScope;
+import com.adark.lib.common.mvp.BaseModel;
 
 import javax.inject.Inject;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 
 /**

@@ -35,7 +35,7 @@
             android:src="@drawable/github_icon"
             />
 
-        <com.jess.arms.widget.customfonts.MyTextView
+        <com.adark.lib.common.widget.customfonts.MyTextView
             android:id="@+id/head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:textColorHint="@color/colorhint"
             >
 
-            <com.jess.arms.widget.customfonts.MyEditText
+            <com.adark.lib.common.widget.customfonts.MyEditText
                 android:id="@+id/login_tv_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
             android:textColorHint="@color/colorhint"
             >
 
-            <com.jess.arms.widget.customfonts.MyEditText
+            <com.adark.lib.common.widget.customfonts.MyEditText
                 android:id="@+id/login_tv_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
             android:orientation="horizontal"
             >
 
-            <com.jess.arms.widget.customfonts.MyCheckBox
+            <com.adark.lib.common.widget.customfonts.MyCheckBox
                 android:id="@+id/login_cb_remember"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 android:textSize="11dp"
                 />
 
-            <com.jess.arms.widget.customfonts.MyTextView
+            <com.adark.lib.common.widget.customfonts.MyTextView
                 android:id="@+id/login_tv_forget_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

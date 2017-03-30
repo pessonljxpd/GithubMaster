@@ -6,10 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.adark.gm.R;
@@ -21,14 +19,14 @@ import com.adark.gm.mvp.contract.MainContract;
 import com.adark.gm.mvp.presenter.MainPresenter;
 import com.adark.gm.util.SVG2Bitmap;
 import com.adark.gm.util.WeekDay;
-import com.jess.arms.utils.UiUtils;
+import com.adark.lib.common.utils.UiUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import butterknife.BindView;
 
-import static com.jess.arms.utils.Preconditions.checkNotNull;
+import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -46,7 +44,7 @@ import static com.jess.arms.utils.Preconditions.checkNotNull;
 public class MainActivity extends WEActivity<MainPresenter> implements MainContract.View {
 
     @Nullable
-    @BindView(R.id.main_tb)
+    @BindView(R.id.common_toolbar)
     Toolbar mToolbar;
     @Nullable
     @BindView(R.id.main_iv_image2d)
@@ -58,7 +56,7 @@ public class MainActivity extends WEActivity<MainPresenter> implements MainContr
         DaggerMainComponent
                 .builder()
                 .appComponent(pAppComponent)
-                .mainModule(new MainModule(this)) //请将MainModule()第一个首字母改为小写
+                .mainModule(new MainModule(this))
                 .build()
                 .inject(this);
     }

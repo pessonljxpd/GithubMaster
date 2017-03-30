@@ -1,6 +1,6 @@
 package com.adark.gm.mvp.model.api.service;
 
-import com.jess.arms.http.BaseServiceManager;
+import com.adark.lib.common.http.BaseServiceManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 

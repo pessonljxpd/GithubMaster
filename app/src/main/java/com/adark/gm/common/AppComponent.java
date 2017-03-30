@@ -6,15 +6,15 @@ import com.adark.gm.di.module.ServiceModule;
 import com.adark.gm.mvp.model.api.cache.CacheManager;
 import com.adark.gm.mvp.model.api.service.ServiceManager;
 import com.google.gson.Gson;
-import com.jess.arms.base.AppManager;
-import com.jess.arms.di.module.AppModule;
-import com.jess.arms.di.module.ClientModule;
-import com.jess.arms.di.module.GlobeConfigModule;
-import com.jess.arms.di.module.ImageModule;
-import com.jess.arms.widget.imageloader.ImageLoader;
+import com.adark.lib.common.base.AppManager;
+import com.adark.lib.common.di.module.AppModule;
+import com.adark.lib.common.di.module.ClientModule;
+import com.adark.lib.common.di.module.GlobeConfigModule;
+import com.adark.lib.common.di.module.ImageModule;
+import com.adark.lib.common.widget.imageloader.ImageLoader;
 import dagger.Component;
 import javax.inject.Singleton;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import com.adark.lib.rxerrorhandler.core.RxErrorHandler;
 import okhttp3.OkHttpClient;
 
 /**

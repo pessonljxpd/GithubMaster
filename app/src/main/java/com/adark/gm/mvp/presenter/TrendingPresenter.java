@@ -3,12 +3,12 @@ package com.adark.gm.mvp.presenter;
 import android.app.Application;
 
 import com.adark.gm.mvp.contract.TrendingContract;
-import com.jess.arms.base.AppManager;
-import com.jess.arms.di.scope.ActivityScope;
-import com.jess.arms.mvp.BasePresenter;
-import com.jess.arms.widget.imageloader.ImageLoader;
+import com.adark.lib.common.base.AppManager;
+import com.adark.lib.common.di.scope.ActivityScope;
+import com.adark.lib.common.mvp.BasePresenter;
+import com.adark.lib.common.widget.imageloader.ImageLoader;
 
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import com.adark.lib.rxerrorhandler.core.RxErrorHandler;
 
 import javax.inject.Inject;
 
