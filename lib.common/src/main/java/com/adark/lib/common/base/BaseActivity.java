@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import timber.log.Timber;
@@ -137,9 +139,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         //绑定到butterknife
         mUnbinder = ButterKnife.bind(this);
         ComponentInject();//依赖注入
+        initToolbar();
         initView();
         initData();
     }
+
+    protected abstract void initToolbar();
 
     /**
      * 返回需要Activity渲染的view，此处给一个默认实现

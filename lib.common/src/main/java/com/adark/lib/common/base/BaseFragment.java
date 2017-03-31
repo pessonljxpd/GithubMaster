@@ -22,10 +22,19 @@ import butterknife.Unbinder;
 public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
     protected BaseActivity mActivity;
     protected View mRootView;
-    protected final String TAG = this.getClass().getSimpleName();
     @Inject
     protected P mPresenter;
+    private static final String TAG = BaseFragment.class.getSimpleName();
+    protected static final String KEY_PARAM = "key_param";
     private Unbinder mUnbinder;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        loadArguments();
+    }
+
+    protected abstract void loadArguments();
 
     @Nullable
     @Override
@@ -41,7 +50,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         super.onActivityCreated(savedInstanceState);
         mActivity = (BaseActivity) getActivity();
         if (useEventBus())//如果要使用eventbus请将此方法返回true
+        {
             EventBus.getDefault().register(this);//注册到事件主线
+        }
         ComponentInject();
         initData();
     }
@@ -63,7 +74,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         super.onDestroy();
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         if (useEventBus())//如果要使用eventbus请将此方法返回true
-            EventBus.getDefault().unregister(this);
+        { EventBus.getDefault().unregister(this); }
         this.mPresenter = null;
         this.mActivity = null;
         this.mRootView = null;
@@ -89,7 +100,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
      * 此方法是让外部调用使fragment做一些操作的,比如说外部的activity想让fragment对象执行一些方法,
      * 建议在有多个需要让外界调用的方法时,统一传bundle,里面存一个what字段,来区分不同的方法,在setData
      * 方法中就可以switch做不同的操作,这样就可以用统一的入口方法做不同的事,和message同理
-     *
+     * <p>
      * 使用此方法时请注意调用时fragment的生命周期,如果调用此setData方法时onActivityCreated
      * 还没执行,setData里调用presenter的方法时,是会报空的,因为dagger注入是在onActivityCreated
      * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在内部onActivityCreated中
@@ -106,7 +117,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
      * 还没执行,setData里调用presenter的方法时,是会报空的,因为dagger注入是在onActivityCreated
      * 方法中执行的,如果要做一些初始化操作,可以不必让外部调setData,在内部onActivityCreated中
      * 初始化就可以了
-     *
      */
     public void setData() {
 

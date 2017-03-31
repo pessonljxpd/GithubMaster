@@ -83,6 +83,11 @@ public class UserLoginActivity extends GMActivity<UserLoginPresenter>
     private ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener;
 
     @Override
+    protected void initToolbar() {
+
+    }
+
+    @Override
     protected void setupActivityComponent(AppComponent pAppComponent) {
         mAppComponent = pAppComponent;
         mRxPermissions = new RxPermissions(this);

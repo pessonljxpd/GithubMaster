@@ -1,7 +1,6 @@
 package com.adark.gm.mvp.ui.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,58 +8,49 @@ import android.view.View;
 import com.adark.gm.R;
 import com.adark.gm.common.AppComponent;
 import com.adark.gm.common.GMFragment;
-import com.adark.gm.di.component.DaggerTrendingComponent;
-import com.adark.gm.di.module.TrendingModule;
-import com.adark.gm.mvp.contract.TrendingContract;
-import com.adark.gm.mvp.presenter.TrendingPresenter;
-import com.adark.lib.common.base.DefaultAdapter;
+import com.adark.gm.di.component.DaggerUserResumeComponent;
+import com.adark.gm.mvp.contract.UserResumeContract;
+import com.adark.gm.di.module.UserResumeModule;
+import com.adark.gm.mvp.presenter.UserResumePresenter;
 import com.adark.lib.common.utils.UiUtils;
+
 
 import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
-
 /**
- * Created by Shelly on 2017-3-22.
+ * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
+ * 由于每个项目包结构都不一定相同,所以每生成一个文件需要自己导入import包名,可以在设置中设置自动导入包名
+ * 请在对应包下按以下顺序生成对应代码,Contract->Model->Presenter->Activity->Module->Component
+ * 因为生成Activity时,Module和Component还没生成,但是Activity中有它们的引用,所以会报错,但是不用理会
+ * 继续将Module和Component生成完后,编译一下项目再回到Activity,按提示修改一个方法名即可
+ * 如果想生成Fragment的相关文件,则将上面构建顺序中的Activity换为Fragment,并将Component中inject方法的参数改为此Fragment
  */
 
-public class TrendingFragment extends GMFragment<TrendingPresenter> implements TrendingContract.View {
-    private static final String TAG = TrendingFragment.class.getSimpleName();
-    private String mParam;
+/**
+ * Created by Shelly on 2017-3-31.
+ */
 
-    public static TrendingFragment newInstance() {
-        return new TrendingFragment();
-    }
+public class UserResumeFragment extends GMFragment<UserResumePresenter> implements UserResumeContract.View {
 
-    public static TrendingFragment newInstance(String pParam) {
-        TrendingFragment fragment = new TrendingFragment();
-        if (pParam != null) {
-            Bundle bundle = new Bundle();
-            bundle.putString(KEY_PARAM, pParam);
-            fragment.setArguments(bundle);
-        }
+
+    public static UserResumeFragment newInstance() {
+        UserResumeFragment fragment = new UserResumeFragment();
         return fragment;
     }
 
     @Override
     protected void setupFragmentComponent(AppComponent pAppComponent) {
-        DaggerTrendingComponent
+        DaggerUserResumeComponent
                 .builder()
                 .appComponent(pAppComponent)
-                .trendingModule(new TrendingModule(this))//请将TrendingModule()第一个首字母改为小写
+                .userResumeModule(new UserResumeModule(this))
                 .build()
                 .inject(this);
     }
 
     @Override
-    protected void loadArguments() {
-        if (getArguments() != null) {
-            mParam = getArguments().getString(KEY_PARAM);
-        }
-    }
-
-    @Override
     protected View initView() {
-        return LayoutInflater.from(getActivity()).inflate(R.layout.fragment_trending, null, false);
+        return LayoutInflater.from(getActivity()).inflate(R.layout.fragment_user_resume, null, false);
     }
 
     @Override
@@ -114,18 +104,4 @@ public class TrendingFragment extends GMFragment<TrendingPresenter> implements T
 
     }
 
-    @Override
-    public void setAdapter(DefaultAdapter pAdapter) {
-
-    }
-
-    @Override
-    public void startLoadMore() {
-
-    }
-
-    @Override
-    public void endLoadMore() {
-
-    }
 }

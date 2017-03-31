@@ -57,14 +57,12 @@ public class AppManager {
     public void onReceive(Message message) {
         switch (message.what) {
             case START_ACTIVITY:
-                if (message.obj == null)
-                    break;
+                if (message.obj == null) { break; }
                 dispatchStart(message);
                 break;
             case SHOW_SNACKBAR:
-                if (message.obj == null)
-                    break;
-                showSnackbar((String) message.obj, message.arg1 != 0 );
+                if (message.obj == null) { break; }
+                showSnackbar((String) message.obj, message.arg1 != 0);
                 break;
             case KILL_ALL:
                 killAll();
@@ -76,10 +74,9 @@ public class AppManager {
     }
 
     private void dispatchStart(Message message) {
-        if (message.obj instanceof Intent)
+        if (message.obj instanceof Intent) {
             startActivity((Intent) message.obj);
-        else if (message.obj instanceof Class)
-            startActivity((Class) message.obj);
+        } else if (message.obj instanceof Class) { startActivity((Class) message.obj); }
         return;
     }
 
@@ -88,7 +85,7 @@ public class AppManager {
      * 使用snackbar显示内容
      *
      * @param message message
-     * @param isLong isLong
+     * @param isLong  isLong
      */
     public void showSnackbar(String message, boolean isLong) {
         if (getCurrentActivity() == null) {
@@ -274,10 +271,6 @@ public class AppManager {
      * 关闭所有activity
      */
     public void killAll() {
-//        while (getActivityList().size() != 0) { //此方法只能兼容LinkedList
-//            getActivityList().remove(0).finish();
-//        }
-
         Iterator<BaseActivity> iterator = getActivityList().iterator();
         while (iterator.hasNext()) {
             iterator.next().finish();
@@ -293,8 +286,7 @@ public class AppManager {
     public void AppExit() {
         try {
             killAll();
-            if (mActivityList != null)
-                mActivityList = null;
+            if (mActivityList != null) { mActivityList = null; }
             ActivityManager activityMgr =
                     (ActivityManager) mApplication.getSystemService(Context.ACTIVITY_SERVICE);
             activityMgr.killBackgroundProcesses(mApplication.getPackageName());

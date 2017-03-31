@@ -2,12 +2,14 @@ package com.adark.gm.mvp.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.adark.gm.R;
@@ -20,6 +22,7 @@ import com.adark.gm.mvp.presenter.MainPresenter;
 import com.adark.gm.util.SVG2Bitmap;
 import com.adark.gm.util.WeekDay;
 import com.adark.lib.common.utils.UiUtils;
+import com.roughike.bottombar.BottomBar;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -43,12 +46,13 @@ import static com.adark.lib.common.utils.Preconditions.checkNotNull;
 
 public class MainActivity extends GMActivity<MainPresenter> implements MainContract.View {
 
-    @Nullable
-    @BindView(R.id.common_toolbar)
-    Toolbar mToolbar;
-    @Nullable
-    @BindView(R.id.main_iv_image2d)
-    ImageView mImageView;
+    @NonNull
+    @BindView(R.id.main_fragment_container)
+    FrameLayout mFragmentContainer;
+    @NonNull
+    @BindView(R.id.main_bottom_bar)
+    BottomBar mBottomBar;
+
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -68,22 +72,14 @@ public class MainActivity extends GMActivity<MainPresenter> implements MainContr
 
     @Override
     protected void initView() {
-        setSupportActionBar(mToolbar);
-        mImageView.setImageBitmap(
-                SVG2Bitmap.get2DBitmap(this, SVG2Bitmap.SHOW_DATA, WeekDay.SUN,
-                                       Color.parseColor("#58F608"), Color.parseColor("#000000"),
-                                       SVG2Bitmap.getScreenWidth(this), 0, false));
     }
 
     @Override
     protected void initData() {
-
     }
-
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
@@ -138,8 +134,8 @@ public class MainActivity extends GMActivity<MainPresenter> implements MainContr
         if (menu != null) {
             if (menu.getClass() == MenuBuilder.class) {
                 try {
-                    Method iconsVisibleMethod = menu.getClass().getDeclaredMethod("setOptionalIconsVisible",
-                                                                                  Boolean.TYPE);
+                    Method iconsVisibleMethod = menu.getClass()
+                                                    .getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
                     iconsVisibleMethod.setAccessible(true);
                     iconsVisibleMethod.invoke(menu, true);
                 } catch (NoSuchMethodException pE) {

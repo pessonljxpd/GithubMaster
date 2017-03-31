@@ -58,6 +58,11 @@ public class UserActivity extends GMActivity<UserPresenter>
     private boolean mIsLoadingMore;
 
     @Override
+    protected void initToolbar() {
+
+    }
+
+    @Override
     protected void setupActivityComponent(AppComponent pAppComponent) {
         mRxPermissions = new RxPermissions(this);
         DaggerUserComponent.builder()

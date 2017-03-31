@@ -47,7 +47,12 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
     @BindView(R.id.splash_ll_bottom)
     LinearLayout mLinearLayout;
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private SplashCountDownTimer mCountDownTimer;
+    private CountDownTimer mCountDownTimer;
+    private boolean mInitCountDownTimer = false;
+
+    @Override
+    protected void initToolbar() {
+    }
 
     @Override
     protected void setupActivityComponent(AppComponent pAppComponent) {
@@ -66,12 +71,20 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
 
     @Override
     protected void initView() {
-        mCountDownTimer = new SplashCountDownTimer(3000, 1000);
-        mCountDownTimer.start();
+        mCountDownTimer = new SplashCountDownTimer(4000, 1000);
     }
 
     @Override
     protected void initData() {
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mInitCountDownTimer) {
+            mCountDownTimer.start();
+            mInitCountDownTimer = true;
+        }
     }
 
     @OnClick(R.id.splash_btn_jump)
@@ -120,11 +133,12 @@ public class SplashActivity extends GMActivity<SplashPresenter> implements Splas
 
         @Override
         public void onTick(long millisUntilFinished) {
-            mBtnCountDownJump.setText((millisUntilFinished / 1000) + "s");
+            mBtnCountDownJump.setText("跳过广告" + (millisUntilFinished / 1000) + "s");
         }
 
         @Override
         public void onFinish() {
+            mBtnCountDownJump.setVisibility(View.INVISIBLE);
             launchActivity(new Intent(mContext, MainActivity.class));
         }
     }

@@ -12,6 +12,4 @@ public class GMAppModule extends AppModule {
     public GMAppModule(Application application) {
         super(application);
     }
-
-
 }
